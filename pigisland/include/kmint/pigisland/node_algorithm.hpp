@@ -9,7 +9,7 @@ namespace pigisland {
 /// Gets the number of periods for which an entity has to wait before
 /// it can move to an adjacent node
 ///
-int waiting_time(map::map_node const &node);
+float waiting_time(map::map_node const &node);
 
 ///
 /// Finds a random node adjacent to argument node
