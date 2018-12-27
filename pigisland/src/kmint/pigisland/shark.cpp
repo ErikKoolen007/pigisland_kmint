@@ -20,7 +20,7 @@ namespace kmint
 			if (to_seconds(t_since_move_) >= waiting_time(node()))
 			{
 				std::cout << steps_ << "\n";
-				if (steps_ >= 100)
+				if (steps_ >= 99)
 				{
 					if(!path_to_rest_.empty())
 					{
@@ -39,7 +39,7 @@ namespace kmint
 					else
 					{
 						if (resting_place_->node_id() == node().node_id())
-							steps_ = 1;
+							steps_ = 0;
 						else
 							set_path_to_rest();
 					}

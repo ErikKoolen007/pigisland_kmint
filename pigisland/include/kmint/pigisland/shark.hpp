@@ -25,7 +25,7 @@ namespace kmint
 			map::map_graph* map_;
 			map::map_node const* resting_place_;
 			delta_time t_since_move_{};
-			int steps_ = 1;
+			int steps_ = 0;
 			std::queue<const kmint::map::map_node*> path_to_rest_;
 			a_star a_star_;
 
