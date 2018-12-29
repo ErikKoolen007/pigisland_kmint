@@ -22,6 +22,7 @@ pig::pig(math::vector2d location)
 
 void pig::act(delta_time dt) {
   free_roaming_actor::act(dt);
+
 }
 } // namespace pigisland
 

@@ -39,7 +39,7 @@ public:
    * Called every tick
    * \param dt the time that has passed since the previous tick
    */
-  virtual void act(delta_time dt) {}
+  virtual void act(delta_time dt) { }
   /*!
    * Returns a drawable that determines how this actor is drawn
    */
