@@ -16,8 +16,11 @@ namespace kmint
 			shark(kmint::map::map_graph& g);
 			ui::drawable const& drawable() const override { return drawable_; }
 			bool incorporeal() const override { return false; }
-			scalar radius() const override { return 16.0; }
+			scalar radius() const override { return 22.7; }
+			bool perceptive() const override { return true; }
+			scalar range_of_perception() const override { return 100.0f; }
 			void act(delta_time dt) override;
+			std::string name() const override { return "shark"; }
 
 			states::state_machine<shark>& get_fsm() const { return *state_machine_; }
 			map::map_node const* get_resting_place() const { return resting_place_; }

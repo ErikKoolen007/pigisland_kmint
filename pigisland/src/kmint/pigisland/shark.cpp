@@ -18,7 +18,7 @@ namespace kmint
 		{
 			state_machine_ = std::make_unique<states::state_machine<shark>>(*this);
 			state_machine_->addState(std::make_unique<states::shark_global_state>());
-			state_machine_->addState(std::make_unique<states::shark_hunt_state>());
+			state_machine_->addState(std::make_unique<states::shark_hunt_state>(g));
 			state_machine_->addState(std::make_unique<states::shark_scared_state>());
 			state_machine_->addState(std::make_unique<states::shark_tired_state>(g));
 			state_machine_->addState(std::make_unique<states::shark_wander_state>());
@@ -29,6 +29,17 @@ namespace kmint
 
 		void shark::act(delta_time dt)
 		{
+			for (std::size_t i = 0; i < num_colliding_actors(); ++i)
+			{
+				actor& a = colliding_actor(i);
+
+				if (a.name() == "pig" && (state_machine_->is_in_state("shark_wander_state") || state_machine_->is_in_state("shark_hunt_state")))
+				{
+					a.set_actor_deceased();
+					break;
+				}
+			}
+			
 			t_since_move_ += dt;
 			if (to_seconds(t_since_move_) >= waiting_time(node()))
 			{

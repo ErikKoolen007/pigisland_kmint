@@ -15,15 +15,7 @@ namespace kmint
 			{
 				if (!path_to_rest_.empty())
 				{
-					for (size_t i = 0; i < shark.node().num_edges(); i++)
-					{
-						const auto neighbor = shark.node()[i].to().node_id();
-						if (neighbor == path_to_rest_.front()->node_id())
-						{
-							shark.node(shark.node()[i].to());
-							break;
-						}
-					}
+					shark.node(*path_to_rest_.front());
 
 					path_to_rest_.pop();
 				}

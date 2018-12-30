@@ -14,6 +14,7 @@ public:
   bool incorporeal() const override { return false; }
   scalar radius() const override { return 16.0; }
   void act(delta_time dt) override;
+  std::string name() const override { return "boat"; }
 
 private:
   play::image_drawable drawable_;

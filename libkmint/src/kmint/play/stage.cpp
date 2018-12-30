@@ -33,6 +33,10 @@ void check_interactions(ForwardIt begin, ForwardIt end) {
 void stage::act(delta_time dt) {
   check_interactions(begin(), end());
   for (actor &a : *this) {
+    if (a.actor_deceased()) {
+      remove_actor(a);
+      break;
+    }  
     a.act(dt);
   }
   std::for_each(begin(), end(), [](actor &a) {
