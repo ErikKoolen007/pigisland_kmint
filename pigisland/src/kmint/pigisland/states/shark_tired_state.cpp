@@ -28,6 +28,8 @@ namespace kmint
 			void shark_tired_state::on_exit(shark& shark)
 			{
 				graph_.untag_all();
+				score_card_->print_score();
+				score_card_->new_round();
 			}
 
 			std::string shark_tired_state::name()

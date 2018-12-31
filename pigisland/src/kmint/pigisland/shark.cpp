@@ -12,15 +12,15 @@ namespace kmint
 {
 	namespace pigisland
 	{
-		shark::shark(kmint::map::map_graph& g)
+		shark::shark(kmint::map::map_graph& g, score_card& score_card)
 			: play::map_bound_actor{g, find_shark_resting_place(g)},
-			  drawable_{*this, shark_image()}, map_{&g}, resting_place_(&node())
+			  drawable_{*this, shark_image()}, map_{&g}, resting_place_(&node()), score_card_(&score_card)
 		{
 			state_machine_ = std::make_unique<states::state_machine<shark>>(*this);
 			state_machine_->addState(std::make_unique<states::shark_global_state>());
 			state_machine_->addState(std::make_unique<states::shark_hunt_state>(g));
 			state_machine_->addState(std::make_unique<states::shark_scared_state>());
-			state_machine_->addState(std::make_unique<states::shark_tired_state>(g));
+			state_machine_->addState(std::make_unique<states::shark_tired_state>(g, score_card));
 			state_machine_->addState(std::make_unique<states::shark_wander_state>());
 
 			state_machine_->set_current_state("shark_wander_state");
@@ -35,7 +35,8 @@ namespace kmint
 
 				if (a.name() == "pig" && (state_machine_->is_in_state("shark_wander_state") || state_machine_->is_in_state("shark_hunt_state")))
 				{
-					a.set_actor_deceased();
+					a.set_actor_removable();
+					score_card_->pig_eaten();
 					break;
 				}
 			}

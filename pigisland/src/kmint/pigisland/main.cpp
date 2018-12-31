@@ -5,6 +5,7 @@
 #include "kmint/pigisland/shark.hpp"
 #include "kmint/play.hpp"
 #include "kmint/ui.hpp"
+#include "kmint/pigisland/score_card.h"
 
 using namespace kmint;
 int main() {
@@ -17,6 +18,8 @@ int main() {
   // maak een podium aan
   play::stage s{};
 
+  pigisland::score_card score_card{};
+
   auto map = pigisland::map();
   map.graph()[0].tagged(true);
   s.build_actor<play::background>(math::size(1024, 768),
@@ -25,8 +28,8 @@ int main() {
   for (int i = 0; i < 100; ++i) {
     s.build_actor<pigisland::pig>(math::vector2d(i * 10.0f, i * 6.0f));
   }
-  s.build_actor<pigisland::shark>(map.graph());
-  s.build_actor<pigisland::boat>(map.graph());
+  s.build_actor<pigisland::shark>(map.graph(), score_card);
+  s.build_actor<pigisland::boat>(map.graph(), score_card);
 
   // Maak een event_source aan (hieruit kun je alle events halen, zoals
   // toetsaanslagen)

@@ -5,6 +5,7 @@
 #include "kmint/play.hpp"
 #include "kmint/primitives.hpp"
 #include "states/state_machine.h"
+#include "score_card.h"
 
 namespace kmint
 {
@@ -13,7 +14,7 @@ namespace kmint
 		class shark : public play::map_bound_actor
 		{
 		public:
-			shark(kmint::map::map_graph& g);
+			shark(kmint::map::map_graph& g, score_card& score_card);
 			ui::drawable const& drawable() const override { return drawable_; }
 			bool incorporeal() const override { return false; }
 			scalar radius() const override { return 22.7; }
@@ -32,6 +33,7 @@ namespace kmint
 			delta_time t_since_move_{};
 
 			std::unique_ptr<states::state_machine<shark>> state_machine_;
+			score_card* score_card_;
 		};
 	} // namespace pigisland
 } // namespace kmint
