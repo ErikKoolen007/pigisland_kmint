@@ -10,8 +10,6 @@ namespace kmint
 		{
 			class boat_global_state : public state<boat>
 			{
-				int paint_damage_ = 0;
-
 			public:
 				boat_global_state() = default;
 

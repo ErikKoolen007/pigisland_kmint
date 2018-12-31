@@ -15,6 +15,8 @@ namespace kmint
 				kmint::map::map_graph& graph_;
 				a_star a_star_;
 				score_card* score_card_;
+				int chosen_dock = 0;
+
 			public:
 				boat_repair_state(kmint::map::map_graph& g, score_card& score_card) : graph_(g), a_star_{ g }, score_card_(&score_card)
 				{

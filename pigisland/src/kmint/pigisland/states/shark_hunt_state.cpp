@@ -55,7 +55,7 @@ namespace kmint
 
 			void shark_hunt_state::on_exit(shark& shark)
 			{
-				graph_.untag_all();
+				a_star_.untag_nodes();
 			}
 
 			std::string shark_hunt_state::name()

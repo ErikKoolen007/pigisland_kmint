@@ -12,17 +12,20 @@ namespace kmint
 			{
 				const int random_number = random_int(1, 100);
 
-				if(random_number <= score_card_->dock_1_chance())
+				if(random_number <= score_card_->dock_chance(1))
 				{
+					chosen_dock = 1;
 					path_to_repair_ = a_star_.a_star_search(boat.node(), find_node_of_kind(graph_, '1'));
 				}
-				else if(random_number > score_card_->dock_1_chance() 
-					&& random_number <= score_card_->dock_1_chance() + score_card_->dock_2_chance())
+				else if(random_number > score_card_->dock_chance(1) 
+					&& random_number <= score_card_->dock_chance(1) + score_card_->dock_chance(2))
 				{
+					chosen_dock = 2;
 					path_to_repair_ = a_star_.a_star_search(boat.node(), find_node_of_kind(graph_, '2'));
 				}
 				else
 				{
+					chosen_dock = 3;
 					path_to_repair_ = a_star_.a_star_search(boat.node(), find_node_of_kind(graph_, '3'));
 				}
 			}
@@ -43,8 +46,23 @@ namespace kmint
 
 			void boat_repair_state::on_exit(boat& boat)
 			{
-				//TODO repair the boat
-				//TODO evaluate effectiveness
+				switch (chosen_dock)
+				{
+				case 1:
+					boat.repair_paint_damage(1, random_int(30, 51));
+					break;
+				case 2:
+					boat.repair_paint_damage(2, random_int(20, 101));
+					break;
+				case 3:
+					boat.repair_paint_damage(3, 50);
+					break;
+				default:
+					break;
+				}
+
+				a_star_.untag_nodes();
+				chosen_dock = 0;
 			}
 
 			std::string boat_repair_state::name()

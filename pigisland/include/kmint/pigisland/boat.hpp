@@ -23,6 +23,10 @@ namespace kmint
 			std::string name() const override { return "boat"; }
 
 			states::state_machine<boat>& get_fsm() const { return *state_machine_; }
+			int paint_damage() const { return paint_damage_; }
+			void add_paint_damage() { paint_damage_++; }
+			void repair_paint_damage(int dock, int amount);
+			void evaluate_dock_effectiveness() const;
 
 		private:
 			play::image_drawable drawable_;
@@ -31,6 +35,8 @@ namespace kmint
 
 			std::unique_ptr<states::state_machine<boat>> state_machine_;
 			score_card* score_card_;
+			int paint_damage_ = 0;
+			int times_repaired_ = 0;
 		};
 	} // namespace pigisland
 } // namespace kmint
