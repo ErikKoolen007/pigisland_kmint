@@ -1,4 +1,5 @@
 #include <kmint/pigisland/states/shark_tired_state.h>
+#include "kmint/pigisland/pig.hpp"
 
 namespace kmint
 {
@@ -8,6 +9,7 @@ namespace kmint
 
 			void shark_tired_state::on_enter(shark& shark)
 			{
+				shark.set_color_tint(0, 0, 0);
 				path_to_rest_ = a_star_.a_star_search(shark.node(), *shark.get_resting_place());
 			}
 
@@ -27,9 +29,9 @@ namespace kmint
 
 			void shark_tired_state::on_exit(shark& shark)
 			{
+				shark.remove_color_tint();
 				a_star_.untag_nodes();
-				score_card_->print_score();
-				score_card_->new_round();
+				new_round_signal_->dispatch();
 			}
 
 			std::string shark_tired_state::name()

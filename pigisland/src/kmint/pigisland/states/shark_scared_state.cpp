@@ -9,6 +9,7 @@ namespace kmint
 
 			void shark_scared_state::on_enter(shark& shark)
 			{
+				shark.set_color_tint(255, 255, 0);
 				scared_steps_ = 10;
 			}
 
@@ -27,6 +28,7 @@ namespace kmint
 
 			void shark_scared_state::on_exit(shark& shark)
 			{
+				shark.remove_color_tint();
 			}
 
 			std::string shark_scared_state::name()

@@ -10,6 +10,7 @@ namespace kmint
 		{
 			void boat_repair_state::on_enter(boat& boat)
 			{
+				boat.set_color_tint(0, 0, 0);
 				const int random_number = random_int(1, 100);
 
 				if(random_number <= score_card_->dock_chance(1))
@@ -46,6 +47,7 @@ namespace kmint
 
 			void boat_repair_state::on_exit(boat& boat)
 			{
+				boat.remove_color_tint();
 				switch (chosen_dock)
 				{
 				case 1:

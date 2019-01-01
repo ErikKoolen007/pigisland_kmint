@@ -12,7 +12,7 @@ namespace kmint
 {
 	namespace pigisland
 	{
-		shark::shark(kmint::map::map_graph& g, score_card& score_card)
+		shark::shark(kmint::map::map_graph& g, score_card& score_card, pigisland::signals::new_round_signal& new_round_signal)
 			: play::map_bound_actor{g, find_shark_resting_place(g)},
 			  drawable_{*this, shark_image()}, map_{&g}, resting_place_(&node()), score_card_(&score_card)
 		{
@@ -20,7 +20,7 @@ namespace kmint
 			state_machine_->addState(std::make_unique<states::shark_global_state>());
 			state_machine_->addState(std::make_unique<states::shark_hunt_state>(g));
 			state_machine_->addState(std::make_unique<states::shark_scared_state>());
-			state_machine_->addState(std::make_unique<states::shark_tired_state>(g, score_card));
+			state_machine_->addState(std::make_unique<states::shark_tired_state>(g, new_round_signal));
 			state_machine_->addState(std::make_unique<states::shark_wander_state>());
 
 			state_machine_->set_current_state("shark_wander_state");
@@ -47,6 +47,12 @@ namespace kmint
 				state_machine_->update();
 				t_since_move_ = from_seconds(0);
 			}
+		}
+
+		void shark::set_color_tint(std::uint8_t r, std::uint8_t g, std::uint8_t b)
+		{
+			graphics::color color{ r, g, b };
+			drawable_.set_tint(color);
 		}
 	} // namespace pigisland
 } // namespace kmint

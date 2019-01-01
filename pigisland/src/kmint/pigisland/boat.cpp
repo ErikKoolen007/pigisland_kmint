@@ -48,10 +48,10 @@ namespace kmint
 		void boat::repair_paint_damage(int dock, int amount)
 		{
 			times_repaired_++;
-			std::cout << times_repaired_ << "\n";
+
 			paint_damage_ -= amount;
 			score_card_->add_repair(dock, amount);
-			std::cout << "Repaired " << amount << " at dock " << dock << ", current damage is: " << paint_damage() << "\n";
+			std::cout << "Repair nr: " << times_repaired_ << " -> repaired " << amount << " at dock " << dock << ", current damage is: " << paint_damage() << "\n";
 
 			if(times_repaired_ >= 10)
 			{
@@ -105,6 +105,12 @@ namespace kmint
 
 			score_card_->reset_repair_history();
 			score_card_->print_dock_chances();
+		}
+
+		void boat::set_color_tint(std::uint8_t r, std::uint8_t g, std::uint8_t b)
+		{
+			graphics::color color{ r, g, b };
+			drawable_.set_tint(color);
 		}
 	} // namespace pigisland
 } // namespace kmint

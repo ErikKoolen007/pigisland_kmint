@@ -8,6 +8,7 @@ namespace kmint
 
 			void shark_hunt_state::on_enter(shark& shark)
 			{
+				shark.set_color_tint(255, 0, 0);
 				for (std::size_t i = 0; i < shark.num_perceived_actors(); ++i) {
 					auto& a = shark.perceived_actor(i);
 					if (a.name() == "pig")
@@ -55,6 +56,7 @@ namespace kmint
 
 			void shark_hunt_state::on_exit(shark& shark)
 			{
+				shark.remove_color_tint();
 				a_star_.untag_nodes();
 			}
 

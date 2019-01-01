@@ -49,12 +49,10 @@ namespace kmint
 						std::cout << "Tried to change to undefined state.\n";
 						return;
 					}
-					//std::cout << "Changed state from: " << current_state_;
 					previous_state_ = current_state_;
 
 					states_.at(current_state_)->on_exit(owner_);
 					current_state_ = new_state;
-					//std::cout << " to: " << current_state_ << "\n";
 					states_.at(current_state_)->on_enter(owner_);
 				}
 

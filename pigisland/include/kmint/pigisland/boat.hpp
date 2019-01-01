@@ -27,6 +27,8 @@ namespace kmint
 			void add_paint_damage() { paint_damage_++; }
 			void repair_paint_damage(int dock, int amount);
 			void evaluate_dock_effectiveness() const;
+			void set_color_tint(std::uint8_t r, std::uint8_t g, std::uint8_t b);
+			void remove_color_tint() { drawable_.remove_tint(); }
 
 		private:
 			play::image_drawable drawable_;
