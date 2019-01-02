@@ -1,7 +1,7 @@
-#include "kmint/properties/KinematicWanderSteering.h"
-#include "kmint/properties/KinematicUnit.h"
+#include "kmint/pigisland/properties/KinematicWanderSteering.h"
+#include "kmint/pigisland/properties/KinematicUnit.h"
 
-KinematicWanderSteering::KinematicWanderSteering(KinematicUnit *pMover, kmint::math::vector2d nullVector)
+KinematicWanderSteering::KinematicWanderSteering(KinematicUnit *pMover)
 	: mpMover(pMover)
 {
 	mApplyDirectly = false;

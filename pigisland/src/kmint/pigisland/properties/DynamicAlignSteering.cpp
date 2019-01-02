@@ -1,5 +1,5 @@
-#include "kmint/properties/DynamicAlignSteering.h"
-#include "kmint/properties/KinematicUnit.h"
+#include "kmint/pigisland/properties/DynamicAlignSteering.h"
+#include "kmint/pigisland/properties/KinematicUnit.h"
 
 DynamicAlignSteering::DynamicAlignSteering(KinematicUnit* pMover, KinematicUnit* pTarget, float targetRadius, float slowRadius, float timeToTarget)
 	: mpMover(pMover)
@@ -14,7 +14,7 @@ DynamicAlignSteering::DynamicAlignSteering(KinematicUnit* pMover, KinematicUnit*
 Steering* DynamicAlignSteering::getSteering()
 {
 	float rotation = mpTarget->getOrientation() - mpMover->getOrientation();
-	rotation = mapToRange(rotation);
+	//rotation = mapToRange(rotation);
 	float rotationSize = abs(rotation);
 
 	if (rotationSize < mTargetRadius)

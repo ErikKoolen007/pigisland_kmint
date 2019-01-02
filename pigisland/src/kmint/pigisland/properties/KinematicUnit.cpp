@@ -30,7 +30,7 @@ void KinematicUnit::update(float time)
 	if (mpCurrentSteering != NULL)
 		steering = mpCurrentSteering->getSteering();
 	else
-		steering = &gNullSteering;
+		steering = NULL;
 
 	if (steering->shouldApplyDirectly())
 	{

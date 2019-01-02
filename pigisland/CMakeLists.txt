@@ -27,6 +27,7 @@ add_executable(pigisland
   src/kmint/pigisland/properties/DynamicAlignSteering.cpp
   src/kmint/pigisland/properties/KinematicUnit.cpp
   src/kmint/pigisland/properties/KinematicWanderSteering.cpp
+  src/kmint/pigisland/properties/Kinematic.cpp
 )
 
 target_compile_features(pigisland PUBLIC cxx_std_17)

@@ -17,7 +17,7 @@ Champlain College
 class Sprite;
 class GraphicsBuffer;
 
-extern Steering gNullSteering;//global object - can point to it for a "NULL" Steering
+//extern Steering gNullSteering;//global object - can point to it for a "NULL" Steering
 
 //minmimum forward speed a unit has to have inorder to rotate 
 //(keeps unit from spinning in place after stopping
