@@ -25,7 +25,29 @@ pig::pig(math::vector2d location)
       
 
 void pig::act(delta_time dt) {
-	move(behaviors_.wander(*this));
+
+	math::vector2d SteeringForce;
+	SteeringForce = SteeringForce += behaviors_.wander(*this);
+
+	//Acceleration = Force/Mass
+	math::vector2d acceleration = SteeringForce / mass;
+
+	//update velocity
+	velocity += acceleration * to_seconds(dt);
+
+	//update the position
+	move(velocity * to_seconds(dt));
+
+	//update the heading if the vehicle has a non zero velocity
+	if (dot(velocity, velocity) > 0.00000001)
+	{
+		//generate setters of these two
+		heading(behaviors_.normalize(velocity));
+		side(perp(heading()));
+	}
+
+	//treat the screen as a toroid
+	//WrapAround(m_vPos, m_pWorld->cxClient(), m_pWorld->cyClient());
 }
 } // namespace pigisland
 

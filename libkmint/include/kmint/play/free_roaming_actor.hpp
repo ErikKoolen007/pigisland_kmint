@@ -14,15 +14,21 @@ public:
       : actor{}, location_{location} {}
 
   math::vector2d location() const override { return location_; }
+  math::vector2d heading() const override { return heading_; }
+  math::vector2d side() const { return side_; }
 
   void act(delta_time dt) override {  
   }
 
 protected:
   void location(math::vector2d loc) { location_ = loc; }
+  void heading(math::vector2d heading) { heading_ = heading; }
+  void side(math::vector2d side) { side_ = side; }
 
 private:
   math::vector2d location_;
+  math::vector2d heading_;
+  math::vector2d side_;
 };
 } // namespace kmint::play
 

@@ -2,6 +2,7 @@
 #include "kmint/play/free_roaming_actor.hpp"
 #include "kmint/random.hpp"
 #include <valarray>
+#include "kmint/pigisland/properties/C2DMatrix.h"
 
 kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wander(play::free_roaming_actor& actor)
 {
@@ -21,16 +22,16 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wander(p
 	kmint::math::vector2d targetLocal = wander_target + kmint::math::vector2d(wander_distance, 0);
 
 	//project the target into world space
-	// kmint::math::vector2d targetWorld = PointToWorldSpace(targetLocal,
-	// 	actor.Heading(),
-	// 	actor.Side(),
-	// 	actor.Pos());
+	kmint::math::vector2d targetWorld = PointToWorldSpace(targetLocal,
+		actor.heading(),
+		actor.side(),
+		actor.location());
 
 	//and steer toward it
 	return targetLocal- actor.location();
 }
 
-void kmint::pigisland::properties::steering_behaviors::normalize(kmint::math::vector2d target)
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::normalize(kmint::math::vector2d target)
 { 
 	double vector_length = std::sqrt(std::pow(target.x(), 2) * std::pow(target.y(), 2));
 
@@ -39,4 +40,28 @@ void kmint::pigisland::properties::steering_behaviors::normalize(kmint::math::ve
 		target.x(target.x() / vector_length);
 		target.y(target.y() / vector_length);
 	}
+	return target;
+}
+
+ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::PointToWorldSpace(const kmint::math::vector2d &point,
+	const kmint::math::vector2d &AgentHeading,
+	const kmint::math::vector2d &AgentSide,
+	const kmint::math::vector2d &AgentPosition)
+{
+	//make a copy of the point
+	 kmint::math::vector2d TransPoint = point;
+
+	//create a transformation matrix
+	C2DMatrix matTransform;
+
+	//rotate
+	matTransform.Rotate(AgentHeading, AgentSide);
+
+	//and translate
+	matTransform.Translate(AgentPosition.x(), AgentPosition.y());
+
+	//now transform the vertices
+	matTransform.TransformVector2Ds(TransPoint);
+
+	return TransPoint;
 }

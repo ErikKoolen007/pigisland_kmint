@@ -106,13 +106,13 @@ inline void C2DMatrix::TransformVector2Ds(std::vector<kmint::math::vector2d> &vP
 {
 	for (unsigned int i = 0; i < vPoint.size(); ++i)
 	{
-		double tempX = (m_Matrix._11*vPoint[i].x) + (m_Matrix._21*vPoint[i].y) + (m_Matrix._31);
+		double tempX = (m_Matrix._11*vPoint[i].x()) + (m_Matrix._21*vPoint[i].y()) + (m_Matrix._31);
 
-		double tempY = (m_Matrix._12*vPoint[i].x) + (m_Matrix._22*vPoint[i].y) + (m_Matrix._32);
+		double tempY = (m_Matrix._12*vPoint[i].x()) + (m_Matrix._22*vPoint[i].y()) + (m_Matrix._32);
 
-		vPoint[i].x = tempX;
+		vPoint[i].x(tempX);
 
-		vPoint[i].y = tempY;
+		vPoint[i].y(tempY);
 
 	}
 }
@@ -121,13 +121,13 @@ inline void C2DMatrix::TransformVector2Ds(std::vector<kmint::math::vector2d> &vP
 inline void C2DMatrix::TransformVector2Ds(kmint::math::vector2d &vPoint)
 {
 
-	double tempX = (m_Matrix._11*vPoint.x) + (m_Matrix._21*vPoint.y) + (m_Matrix._31);
+	double tempX = (m_Matrix._11*vPoint.x()) + (m_Matrix._21*vPoint.y()) + (m_Matrix._31);
 
-	double tempY = (m_Matrix._12*vPoint.x) + (m_Matrix._22*vPoint.y) + (m_Matrix._32);
+	double tempY = (m_Matrix._12*vPoint.x()) + (m_Matrix._22*vPoint.y()) + (m_Matrix._32);
 
-	vPoint.x = tempX;
+	vPoint.x(tempX);
 
-	vPoint.y = tempY;
+	vPoint.y(tempY);
 }
 
 
@@ -198,9 +198,9 @@ inline void C2DMatrix::Rotate(const kmint::math::vector2d &fwd, const kmint::mat
 {
 	C2DMatrix::Matrix mat;
 
-	mat._11 = fwd.x;  mat._12 = fwd.y; mat._13 = 0;
+	mat._11 = fwd.x();  mat._12 = fwd.y(); mat._13 = 0;
 
-	mat._21 = side.x; mat._22 = side.y; mat._23 = 0;
+	mat._21 = side.x(); mat._22 = side.y(); mat._23 = 0;
 
 	mat._31 = 0; mat._32 = 0; mat._33 = 1;
 

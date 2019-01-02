@@ -21,6 +21,8 @@ public:
 private:
   play::image_drawable drawable_;
   properties::steering_behaviors behaviors_;
+  double mass = 10;
+  math::vector2d velocity = math::vector2d(2, 2);
 };
 
 } // namespace pigisland

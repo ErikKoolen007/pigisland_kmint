@@ -18,13 +18,17 @@ namespace kmint
 			public: 
 				steering_behaviors() = default;
 				kmint::math::vector2d wander(play::free_roaming_actor& actor);
+				kmint::math::vector2d normalize(kmint::math::vector2d target);
 			private:
 				kmint::math::vector2d wander_target;
 				double wander_radius = 1.2;
 				double wander_distance = 2.0;
 				double wander_jitter = 80.0;
 				//math::vector2d steering_force = wander();
-				void normalize(kmint::math::vector2d target);
+				kmint::math::vector2d PointToWorldSpace(const kmint::math::vector2d& point,
+				                                        const kmint::math::vector2d& AgentHeading,
+				                                        const kmint::math::vector2d& AgentSide,
+				                                        const kmint::math::vector2d& AgentPosition);
 			};
 
 		}
