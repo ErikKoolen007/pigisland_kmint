@@ -20,6 +20,7 @@ public:
 
 private:
   play::image_drawable drawable_;
+  properties::steering_behaviors behaviors_;
 };
 
 } // namespace pigisland

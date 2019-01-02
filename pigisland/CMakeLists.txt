@@ -28,6 +28,7 @@ add_executable(pigisland
   src/kmint/pigisland/states/boat_repair_state.cpp
   src/kmint/pigisland/states/boat_global_state.cpp
   src/kmint/pigisland/score_card.cpp
+  src/kmint/pigisland/properties/steering_behaviors.cpp
 )
 
 target_compile_features(pigisland PUBLIC cxx_std_17)

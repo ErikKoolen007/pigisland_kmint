@@ -18,13 +18,14 @@ math::vector2d random_vector() {
 } // namespace
 
 pig::pig(math::vector2d location)
-	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() } {}
+	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() }
+{
+	behaviors_ = properties::steering_behaviors();
+}
       
 
 void pig::act(delta_time dt) {
-  //free_roaming_actor::act(dt);
-	//this->location() = update(to_seconds(dt));
-	//this->move(location());
+	move(behaviors_.wander(*this));
 }
 } // namespace pigisland
 

@@ -52,7 +52,7 @@ int main()
 	// main_loop stuurt alle actors aan.
 	main_loop(s, window, [&](delta_time dt, loop_controls& ctl)
 	{
-		//Sleep(500);
+		Sleep(3000);
 		// gebruik dt om te kijken hoeveel tijd versterken is
 		// sinds de vorige keer dat deze lambda werd aangeroepen
 		// loop controls is een object met eigenschappen die je kunt gebruiken om de

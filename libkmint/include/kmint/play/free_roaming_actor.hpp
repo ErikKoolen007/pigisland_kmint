@@ -3,6 +3,7 @@
 
 #include "kmint/math/vector2d.hpp"
 #include "kmint/play/actor.hpp"
+#include "kmint/pigisland/properties/steering_behaviors.h"
 
 namespace kmint::play {
 /*! \brief Base class for actors that can move freely across the stage.
@@ -14,9 +15,7 @@ public:
 
   math::vector2d location() const override { return location_; }
 
-  void act(delta_time dt) override {
-    //this->location() = update(to_seconds(dt));
-
+  void act(delta_time dt) override {  
   }
 
 protected:
