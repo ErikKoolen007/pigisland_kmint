@@ -252,11 +252,17 @@ public:
                                             deref_actor_const);
   }
 
+  virtual std::string name() const { return {}; }
+  virtual void set_actor_removable() { actor_removable_ = true; }
+  virtual bool actor_removed() { return actor_removable_; }
+
 private:
   std::vector<actor *> collision_set_;
   std::vector<actor *> perceived_set_;
   static actor &deref_actor(actor *ptr) { return *ptr; }
   static actor const &deref_actor_const(actor const *ptr) { return *ptr; }
+
+  bool actor_removable_ = false;
 };
 
 /*!

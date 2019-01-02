@@ -12,11 +12,12 @@ namespace kmint
 			class shark_tired_state : public state<shark>
 			{
 				std::queue<const kmint::map::map_node*> path_to_rest_;
-				kmint::map::map_graph& graph_;
 				a_star a_star_;
+				pigisland::signals::new_round_signal* new_round_signal_;
 
 			public:
-				shark_tired_state(kmint::map::map_graph& g) : graph_(g), a_star_{g}
+				shark_tired_state(kmint::map::map_graph& g, pigisland::signals::new_round_signal& new_round_signal) :
+					a_star_{g}, new_round_signal_(&new_round_signal)
 				{
 				}
 

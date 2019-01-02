@@ -12,8 +12,11 @@ public:
   const ui::drawable &drawable() const override { return drawable_; }
   void move(math::vector2d delta) { location(location() + delta); }
   void act(delta_time dt) override;
+  bool perceivable() const override { return true; }
   bool perceptive() const override { return true; }
   scalar range_of_perception() const override { return 30.0f; }
+  bool incorporeal() const override { return false; }
+  std::string name() const override { return "pig"; }
 
 private:
   play::image_drawable drawable_;

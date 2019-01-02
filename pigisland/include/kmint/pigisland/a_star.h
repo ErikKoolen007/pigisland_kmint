@@ -10,10 +10,11 @@ namespace kmint
 		class a_star
 		{
 			map::map_graph& graph_;
+			std::queue<const map::map_node*> untag_queue_;
 
 			std::queue<const map::map_node*> reconstruct_path(
 				const map::map_node* start, const map::map_node* goal,
-				std::map<const map::map_node*, const map::map_node*> came_from) const;
+				std::map<const map::map_node*, const map::map_node*> came_from);
 
 			double heuristic(const map::map_node& a, const map::map_node& b) const;
 		public:
@@ -22,7 +23,9 @@ namespace kmint
 			}
 
 			std::queue<const map::map_node*> a_star_search(
-				const map::map_node& start, const map::map_node& goal) const;
+				const map::map_node& start, const map::map_node& goal);
+
+			void untag_nodes();
 		};
 	}
 }

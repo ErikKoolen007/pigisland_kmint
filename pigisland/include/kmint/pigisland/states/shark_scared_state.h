@@ -10,6 +10,7 @@ namespace kmint
 		{
 			class shark_scared_state : public state<shark>
 			{
+				int scared_steps_;
 			public:
 				shark_scared_state() = default;
 

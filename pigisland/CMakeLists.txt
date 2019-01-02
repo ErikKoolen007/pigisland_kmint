@@ -23,7 +23,11 @@ add_executable(pigisland
   src/kmint/pigisland/states/shark_hunt_state.cpp
   src/kmint/pigisland/states/shark_scared_state.cpp
   src/kmint/pigisland/states/shark_tired_state.cpp
-  src/kmint/pigisland/states/shark_wander_state.cpp)
+  src/kmint/pigisland/states/shark_wander_state.cpp
+  src/kmint/pigisland/states/boat_wander_state.cpp
+  src/kmint/pigisland/states/boat_repair_state.cpp
+  src/kmint/pigisland/states/boat_global_state.cpp
+  src/kmint/pigisland/score_card.cpp)
 
 target_compile_features(pigisland PUBLIC cxx_std_17)
 target_link_libraries(pigisland PRIVATE kmint)
