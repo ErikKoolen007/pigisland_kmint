@@ -1,5 +1,6 @@
 #include "kmint/pigisland/properties/Kinematic.h"
 #include "kmint/pigisland/properties/Steering.h"
+#include <iostream>
 
 Kinematic::Kinematic(const kmint::math::vector2d &position, float orientation, const kmint::math::vector2d &velocity, float rotationVel)
 	:mPosition(position)
@@ -15,10 +16,47 @@ Kinematic::~Kinematic()
 
 kmint::math::vector2d Kinematic::update(float time)
 {
-	mPosition += mVelocity * time;
-	mOrientation += mRotationVel * time;
-	//heavily tweak mposition
-	return mPosition;
+	float x;
+	float y;
+
+	if(time > 0.009)
+	{
+		mPosition += mVelocity * time;
+		mOrientation += mRotationVel * time;
+		//heavily tweak mposition
+		mPosition = mPosition * -1;
+		mPosition = mPosition / 1E5;
+	} else
+	{
+		time = 0.02;
+		mPosition += mVelocity * time;
+		mOrientation += mRotationVel * time;
+		mPosition = mPosition * -1;
+		mPosition = mPosition / 1E5;
+	}
+
+	if(mPosition.x() < 100 || mPosition.x() > 924)
+	{
+		x = 500;
+	} else
+	{
+		x = mPosition.x();
+	}
+
+	if(mPosition.y() < 50 || mPosition.y() > 728)
+	{
+		y = 500;
+	} else
+	{
+		y = mPosition.y();
+	}
+
+	kmint::math::vector2d location = kmint::math::vector2d(x, y);
+
+	std::cout << "Pig x = " << location.x() << std::endl;
+	std::cout << "Pig y = " << location.y() << std::endl;
+
+	return location;
 }
 
 void Kinematic::calcNewVelocities(const Steering& theSteering, float time, float maxSpeed, float maxRotationalVelocity)

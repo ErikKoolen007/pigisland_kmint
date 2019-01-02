@@ -3,6 +3,7 @@
 #include "kmint/pigisland/resources.hpp"
 #include "kmint/random.hpp"
 #include <cmath>
+#include <iostream>
 
 namespace kmint {
 namespace pigisland {
@@ -24,6 +25,7 @@ void pig::act(delta_time dt) {
   //free_roaming_actor::act(dt);
 	this->location() = update(to_seconds(dt));
 	this->move(location());
+	this->must_draw();
 }
 } // namespace pigisland
 
