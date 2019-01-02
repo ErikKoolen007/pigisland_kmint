@@ -20,7 +20,7 @@ public:
 	~Kinematic();
 
 	//move and rotate based on current velocities
-	void update(float time);
+	kmint::math::vector2d update(float time);
 
 	//modify current velocities based on passed in Steering for the specified time interval and max speeds
 	void calcNewVelocities(const Steering& theSteering, float time, float maxSpeed, float maxRotationalVelocity);

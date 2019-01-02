@@ -21,8 +21,9 @@ pig::pig(math::vector2d location)
       
 
 void pig::act(delta_time dt) {
-  free_roaming_actor::act(dt);
-
+  //free_roaming_actor::act(dt);
+	this->location() = update(to_seconds(dt));
+	this->move(location());
 }
 } // namespace pigisland
 

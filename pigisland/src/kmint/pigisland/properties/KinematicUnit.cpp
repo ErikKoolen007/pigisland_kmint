@@ -24,8 +24,9 @@ KinematicUnit::~KinematicUnit()
 // 	mpSprite->draw(*pBuffer, mPosition.x(), mPosition.y(), mOrientation);
 // }
 
-void KinematicUnit::update(float time)
+kmint::math::vector2d KinematicUnit::update(float time)
 {
+	wander();
 	Steering* steering;
 	if (mpCurrentSteering != NULL)
 		steering = mpCurrentSteering->getSteering();
@@ -37,8 +38,8 @@ void KinematicUnit::update(float time)
 		//not stopped
 		// if (getLengthSquared() > MIN_VELOCITY_TO_TURN_SQUARED)
 		// {
-		// 	setVelocity(steering->getLinear());
-		// 	setOrientation(steering->getAngular());
+			setVelocity(steering->getLinear());
+			setOrientation(steering->getAngular());
 		// }
 
 		//since we are applying the steering directly we don't want any rotational velocity
@@ -52,13 +53,15 @@ void KinematicUnit::update(float time)
 	calcNewVelocities(*steering, time, mMaxVelocity, mMaxRotationalVelocity);
 
 	//move the unit using current velocities
-	Kinematic::update(time);
+	mPosition = Kinematic::update(time);
 
 	//move to oposite side of screen if we are off
 	//GRAPHICS_SYSTEM->wrapCoordinates(mPosition);
 
 	//set the orientation to match the direction of travel
 	//setNewOrientation();
+
+	return mPosition;
 }
 
 //private - deletes old Steering before setting

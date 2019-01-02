@@ -13,10 +13,12 @@ Kinematic::~Kinematic()
 {
 }
 
-void Kinematic::update(float time)
+kmint::math::vector2d Kinematic::update(float time)
 {
 	mPosition += mVelocity * time;
 	mOrientation += mRotationVel * time;
+	//heavily tweak mposition
+	return mPosition;
 }
 
 void Kinematic::calcNewVelocities(const Steering& theSteering, float time, float maxSpeed, float maxRotationalVelocity)
