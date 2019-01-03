@@ -232,10 +232,10 @@ typedef struct _SDL_Haptic SDL_Haptic;
 #define SDL_HAPTIC_SPRING     (1u<<7)
 
 /**
- *  \brief Damper effect supported - uses axes velocity.
+ *  \brief Damper effect supported - uses axes velocity_.
  *
  *  Condition haptic effect that simulates dampening.  Effect is based on the
- *  axes velocity.
+ *  axes velocity_.
  *
  *  \sa SDL_HapticCondition
  */
@@ -580,7 +580,7 @@ typedef struct SDL_HapticPeriodic
  *
  *  The struct handles the following effects:
  *   - ::SDL_HAPTIC_SPRING: Effect based on axes position.
- *   - ::SDL_HAPTIC_DAMPER: Effect based on axes velocity.
+ *   - ::SDL_HAPTIC_DAMPER: Effect based on axes velocity_.
  *   - ::SDL_HAPTIC_INERTIA: Effect based on axes acceleration.
  *   - ::SDL_HAPTIC_FRICTION: Effect based on axes movement.
  *

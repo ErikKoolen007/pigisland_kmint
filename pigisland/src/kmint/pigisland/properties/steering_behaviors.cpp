@@ -217,3 +217,37 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::normaliz
 
 	return false;
  }
+
+ bool kmint::pigisland::properties::steering_behaviors::accumulate_force(kmint::math::vector2d &RunningTot,
+	 kmint::math::vector2d ForceToAdd, play::free_roaming_actor& actor)
+ {
+
+	 //calculate how much steering force the vehicle has used so far
+	 double MagnitudeSoFar = calcVLength(RunningTot);
+
+	 //calculate how much steering force remains to be used by this vehicle
+	 double MagnitudeRemaining = actor.maxForce() - MagnitudeSoFar;
+
+	 //return false if there is no more force left to use
+	 if (MagnitudeRemaining <= 0.0) return false;
+
+	 //calculate the magnitude of the force we want to add
+	 double MagnitudeToAdd = calcVLength(ForceToAdd);
+
+	 //if the magnitude of the sum of ForceToAdd and the running total
+	 //does not exceed the maximum force available to this vehicle, just
+	 //add together. Otherwise add as much of the ForceToAdd vector is
+	 //possible without going over the max.
+	 if (MagnitudeToAdd < MagnitudeRemaining)
+	 {
+		 RunningTot += ForceToAdd;
+	 }
+
+	 else
+	 {
+		 //add it to the steering force
+		 RunningTot += (normalize(ForceToAdd) * MagnitudeRemaining);
+	 }
+
+	 return true;
+ }

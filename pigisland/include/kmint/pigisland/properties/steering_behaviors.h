@@ -25,6 +25,8 @@ namespace kmint
 				kmint::math::vector2d truncate(double max, kmint::math::vector2d & target);
 				double fRand(double fMin, double fMax);
 				double calcVLength(kmint::math::vector2d target);
+				bool accumulate_force(kmint::math::vector2d& RunningTot, kmint::math::vector2d ForceToAdd,
+					play::free_roaming_actor& actor);
 			private:
 				//a vertex buffer to contain the feelers rqd for wall avoidance  
 				std::vector<math::vector2d> m_Feelers;

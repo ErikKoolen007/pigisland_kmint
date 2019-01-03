@@ -21,31 +21,43 @@ pig::pig(math::vector2d location)
 	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() }
 {
 	behaviors_ = properties::steering_behaviors();
+	velocity_ = math::vector2d(behaviors_.fRand(-0.001, 0.001), behaviors_.fRand(-0.001, 0.001));
+	mass_ = 1;
+	maxSpeed_ = 0.01;
+	maxForce_ = 1;
+	weightWallAvoidance_ = 1;
 }
       
 
 void pig::act(delta_time dt) {
+	kmint::math::vector2d force;
+	math::vector2d steeringForce;
 
-	math::vector2d SteeringForce;
-	SteeringForce = SteeringForce += behaviors_.wander(*this);
+	//TODO: change to accumulate force
+	steeringForce = steeringForce += behaviors_.wander(*this);
+
+	//TODO: create walls according to map
+	//force = behaviors_.wall_avoidance() * weightWallAvoidance_;
+
+	behaviors_.accumulate_force(steeringForce, force, *this);
 
 	//Acceleration = Force/Mass
-	math::vector2d acceleration = SteeringForce / mass;
+	math::vector2d acceleration = steeringForce / mass_;
 
-	//update velocity
-	velocity += acceleration * to_seconds(dt);
+	//update velocity_
+	velocity_ += acceleration * to_seconds(dt);
 
-	//make sure vehicle does not exceed maximum velocity
-	truncate(velocity, maxSpeed);
+	//make sure vehicle does not exceed maximum velocity_
+	truncate(velocity_, maxSpeed_);
 
 	//update the position
-	move(velocity * to_seconds(dt));
+	move(velocity_ * to_seconds(dt));
 
-	//update the heading if the vehicle has a non zero velocity
-	if (dot(velocity, velocity) > 0.00000001)
+	//update the heading if the vehicle has a non zero velocity_
+	if (dot(velocity_, velocity_) > 0.00000001)
 	{
 		//generate setters of these two
-		heading(behaviors_.normalize(velocity));
+		heading(behaviors_.normalize(velocity_));
 		side(perp(heading()));
 	}
 }
