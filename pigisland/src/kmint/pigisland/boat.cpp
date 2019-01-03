@@ -5,6 +5,7 @@
 #include "kmint/pigisland/states/boat_global_state.h"
 #include "kmint/pigisland/states/boat_wander_state.h"
 #include "kmint/pigisland/states/boat_repair_state.h"
+#include "kmint/pigisland/pig.hpp"
 
 namespace kmint
 {
@@ -33,7 +34,9 @@ namespace kmint
 				{
 					a.set_actor_removable();
 					score_card_->pig_saved();
-					break;
+					auto* pig = dynamic_cast<pigisland::pig*>(&a);
+					std::cout << pig->get_chromosome().get()[0] << "\n";
+ 					break;
 				}
 			}
 

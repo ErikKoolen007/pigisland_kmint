@@ -17,15 +17,12 @@ math::vector2d random_vector() {
 }
 } // namespace
 
-pig::pig(math::vector2d location)
-	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() } {}
+pig::pig(math::vector2d location, chromosome chromosome)
+	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() }, chromosome_(chromosome) {}
       
 
 void pig::act(delta_time dt) {
-  //free_roaming_actor::act(dt);
-	this->location() = update(to_seconds(dt));
-	this->move(location());
-	this->must_draw();
+  free_roaming_actor::act(dt);
 }
 } // namespace pigisland
 

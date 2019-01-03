@@ -53,8 +53,8 @@ kmint::math::vector2d Kinematic::update(float time)
 
 	kmint::math::vector2d location = kmint::math::vector2d(x, y);
 
-	std::cout << "Pig x = " << location.x() << std::endl;
-	std::cout << "Pig y = " << location.y() << std::endl;
+	//std::cout << "Pig x = " << location.x() << std::endl;
+	//std::cout << "Pig y = " << location.y() << std::endl;
 
 	return location;
 }
