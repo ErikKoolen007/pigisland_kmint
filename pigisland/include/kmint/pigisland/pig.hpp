@@ -19,7 +19,7 @@ public:
   std::string name() const override { return "pig"; }
 private:
   play::image_drawable drawable_;
-	
+  std::vector<Wall2D> walls;
 };
 
 } // namespace pigisland

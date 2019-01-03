@@ -24,8 +24,10 @@ pig::pig(math::vector2d location)
 	velocity_ = math::vector2d(behaviors_.fRand(-0.001, 0.001), behaviors_.fRand(-0.001, 0.001));
 	mass_ = 1;
 	maxSpeed_ = 0.01;
-	maxForce_ = 1;
-	weightWallAvoidance_ = 1;
+	maxForce_ = 100;
+	weightWallAvoidance_ = 100;
+
+	walls = pigisland::walls();
 }
       
 
@@ -33,11 +35,9 @@ void pig::act(delta_time dt) {
 	kmint::math::vector2d force;
 	math::vector2d steeringForce;
 
-	//TODO: change to accumulate force
 	steeringForce = steeringForce += behaviors_.wander(*this);
 
-	//TODO: create walls according to map
-	//force = behaviors_.wall_avoidance() * weightWallAvoidance_;
+	force = behaviors_.wall_avoidance(walls, *this) * weightWallAvoidance_;
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 

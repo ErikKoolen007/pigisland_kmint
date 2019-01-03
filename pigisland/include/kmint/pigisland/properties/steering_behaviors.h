@@ -29,12 +29,12 @@ namespace kmint
 					play::free_roaming_actor& actor);
 			private:
 				//a vertex buffer to contain the feelers rqd for wall avoidance  
-				std::vector<math::vector2d> m_Feelers;
+				std::vector<math::vector2d> m_Feelers = std::vector<math::vector2d>(3);
 				kmint::math::vector2d wander_target;
 				double wander_radius = 0.01;
 				double wander_distance = 0.01;
 				double wander_jitter = 1000.0;
-				//math::vector2d steering_force = wander();
+
 				kmint::math::vector2d PointToWorldSpace(const kmint::math::vector2d& point,
 				                                        const kmint::math::vector2d& AgentHeading,
 				                                        const kmint::math::vector2d& AgentSide,
