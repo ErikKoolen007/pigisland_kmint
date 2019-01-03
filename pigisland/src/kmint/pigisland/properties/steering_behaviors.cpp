@@ -92,6 +92,13 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wall_avo
 	return SteeringForce;
 }
 
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::Seek(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor)
+{
+	kmint::math::vector2d DesiredVelocity = normalize(TargetPos - actor.location())
+		* actor.maxSpeed();
+	return (DesiredVelocity - actor.velocity());
+}
+
 double kmint::pigisland::properties::steering_behaviors::calcVLength(kmint::math::vector2d target) {
 	return std::sqrt(std::pow(target.x(), 2) + std::pow(target.y(), 2));
 }
