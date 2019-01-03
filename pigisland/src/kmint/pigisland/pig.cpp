@@ -11,8 +11,8 @@ namespace pigisland {
 namespace {
 
 math::vector2d random_vector() {
-  auto x = random_scalar(100, 924);
-  auto y = random_scalar(50, 728);
+  auto x = random_scalar(150, 874);
+  auto y = random_scalar(100, 678);
   return {x, y};
 }
 } // namespace
@@ -21,11 +21,11 @@ pig::pig(math::vector2d location)
 	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() }
 {
 	behaviors_ = properties::steering_behaviors();
-	velocity_ = math::vector2d(behaviors_.fRand(-0.001, 0.001), behaviors_.fRand(-0.001, 0.001));
-	mass_ = 1.25;
-	maxSpeed_ = 0.0001;
-	maxForce_ = 500;
-	weightWallAvoidance_ = 10000000;
+	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.0008));
+	mass_ = 0.25;
+	maxSpeed_ = 0.1;
+	maxForce_ = 75;
+	weightWallAvoidance_ = 1000;
 
 	walls = pigisland::walls();
 }
