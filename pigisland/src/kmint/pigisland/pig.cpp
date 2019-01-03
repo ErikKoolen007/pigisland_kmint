@@ -21,9 +21,11 @@ pig::pig(math::vector2d location, chromosome chromosome, pigisland::shark& shark
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.0008));
 	mass_ = 0.25;
-	maxSpeed_ = 0.1;
+	maxSpeed_ = 50;
 	maxForce_ = 75;
-	weightWallAvoidance_ = 1000;
+	//NOTE: these weight modifiers are very hard modifiers
+	weightWallAvoidance_ = 1;
+	weightSeek_ = 0.0075;
 
 	walls = pigisland::walls();
 }
@@ -35,11 +37,13 @@ void pig::act(delta_time dt) {
 
 	steeringForce = steeringForce += behaviors_.wander(*this);
 
-	force = behaviors_.wall_avoidance(walls, *this) * weightWallAvoidance_;
+	force = behaviors_.seek(boat.location(), *this) * weightSeek_;
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
-	//force = behaviors_.seek();
+	force = behaviors_.wall_avoidance(walls, *this) * weightWallAvoidance_;
+
+	behaviors_.accumulate_force(steeringForce, force, *this);
 
 	//Acceleration = Force/Mass
 	math::vector2d acceleration = steeringForce / mass_;
