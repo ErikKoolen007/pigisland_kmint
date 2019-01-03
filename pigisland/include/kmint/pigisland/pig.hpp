@@ -25,10 +25,6 @@ private:
   math::vector2d velocity = math::vector2d(behaviors_.fRand(-0.001, 0.001), behaviors_.fRand(-0.001, 0.001));
   //the maximum speed at which this entity may travel.
   double maxSpeed = 0.01;
-  //the maximum force this entity can produce to power itself
-  //(think rockets and thrust)
-  //double maxForce = 100;
-  //the maximum rate (radians per
 };
 
 } // namespace pigisland

@@ -48,9 +48,6 @@ void pig::act(delta_time dt) {
 		heading(behaviors_.normalize(velocity));
 		side(perp(heading()));
 	}
-
-	//treat the screen as a toroid
-	//WrapAround(m_vPos, m_pWorld->cxClient(), m_pWorld->cyClient());
 }
 } // namespace pigisland
 
