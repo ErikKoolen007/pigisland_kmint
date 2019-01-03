@@ -154,7 +154,7 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::normaliz
  {
 	 const double   HalfPi = 3.14159 / 2;
 	//may be needed to tweak
-	 float wallDetectionLength = 200;
+	 float wallDetectionLength = 75;
 	 //feeler pointing straight in front
 	 m_Feelers[0] = actor.location() + wallDetectionLength * actor.heading();
 

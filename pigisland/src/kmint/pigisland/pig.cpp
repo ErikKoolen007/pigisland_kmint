@@ -22,10 +22,10 @@ pig::pig(math::vector2d location)
 {
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.001, 0.001), behaviors_.fRand(-0.001, 0.001));
-	mass_ = 1;
-	maxSpeed_ = 0.01;
-	maxForce_ = 100;
-	weightWallAvoidance_ = 100;
+	mass_ = 1.25;
+	maxSpeed_ = 0.0001;
+	maxForce_ = 500;
+	weightWallAvoidance_ = 1000;
 
 	walls = pigisland::walls();
 }

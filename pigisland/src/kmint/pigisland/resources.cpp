@@ -48,25 +48,28 @@ std::vector<Wall2D> walls()
 {
 	std::vector<Wall2D> walls;
 
+	//screen edges
 	math::vector2d A = math::vector2d(0, 768);
 	math::vector2d B = math::vector2d(0, 0);
 	Wall2D edgeW = Wall2D(A, B);
 	walls.push_back(edgeW);
-
+	
 	A = math::vector2d(1024, 0);
 	B = math::vector2d(1024, 768);
 	Wall2D edgeE = Wall2D(A, B);
 	walls.push_back(edgeE);
-
+	
 	A = math::vector2d(1024, 768);
 	B = math::vector2d(0, 768);
 	Wall2D edgeS = Wall2D(A, B);
 	walls.push_back(edgeS);
-
+	
 	A = math::vector2d(0, 0);
 	B = math::vector2d(1024, 0);
 	Wall2D edgeN = Wall2D(A, B);
 	walls.push_back(edgeN);
+
+	//Island North-East
 
 	return walls;
 }
