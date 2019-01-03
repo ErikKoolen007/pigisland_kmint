@@ -92,7 +92,7 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wall_avo
 	return SteeringForce;
 }
 
-kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::Seek(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor)
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::seek(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor)
 {
 	kmint::math::vector2d DesiredVelocity = normalize(TargetPos - actor.location())
 		* actor.maxSpeed();

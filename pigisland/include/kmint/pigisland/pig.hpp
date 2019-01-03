@@ -4,13 +4,15 @@
 #include "kmint/play.hpp"
 #include "chromosome.h"
 #include "properties/steering_behaviors.h"
+#include "shark.hpp"
+#include "boat.hpp"
 
 namespace kmint {
 namespace pigisland {
 
 class pig : public play::free_roaming_actor {
 public:
-  pig(math::vector2d location, chromosome chromosome);
+  pig(math::vector2d location, chromosome chromosome, shark& shark, boat& boat);
   const ui::drawable &drawable() const override { return drawable_; }
   void move(math::vector2d delta) { location(location() + delta); }
   void act(delta_time dt) override;
@@ -23,6 +25,8 @@ public:
   chromosome& get_chromosome() { return chromosome_; }
 
 private:
+  shark& shark;
+  boat& boat;
   play::image_drawable drawable_;
   std::vector<Wall2D> walls;
   chromosome chromosome_;

@@ -15,8 +15,8 @@ math::vector2d random_vector() {
 }
 } // namespace
 
-pig::pig(math::vector2d location, chromosome chromosome)
-	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() }, chromosome_(chromosome)
+pig::pig(math::vector2d location, chromosome chromosome, pigisland::shark& shark, pigisland::boat& boat)
+	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() }, chromosome_(chromosome), shark(shark), boat(boat)
 {
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.0008));
@@ -38,6 +38,8 @@ void pig::act(delta_time dt) {
 	force = behaviors_.wall_avoidance(walls, *this) * weightWallAvoidance_;
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
+
+	//force = behaviors_.seek();
 
 	//Acceleration = Force/Mass
 	math::vector2d acceleration = steeringForce / mass_;

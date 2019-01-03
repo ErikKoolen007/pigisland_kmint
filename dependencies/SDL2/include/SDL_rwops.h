@@ -57,7 +57,7 @@ typedef struct SDL_RWops
     Sint64 (SDLCALL * size) (struct SDL_RWops * context);
 
     /**
-     *  Seek to \c offset relative to \c whence, one of stdio's whence values:
+     *  seek to \c offset relative to \c whence, one of stdio's whence values:
      *  RW_SEEK_SET, RW_SEEK_CUR, RW_SEEK_END
      *
      *  \return the final offset in the data stream, or -1 on error.
@@ -171,9 +171,9 @@ extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromConstMem(const void *mem,
 extern DECLSPEC SDL_RWops *SDLCALL SDL_AllocRW(void);
 extern DECLSPEC void SDLCALL SDL_FreeRW(SDL_RWops * area);
 
-#define RW_SEEK_SET 0       /**< Seek from the beginning of data */
-#define RW_SEEK_CUR 1       /**< Seek relative to current read point */
-#define RW_SEEK_END 2       /**< Seek relative to the end of data */
+#define RW_SEEK_SET 0       /**< seek from the beginning of data */
+#define RW_SEEK_CUR 1       /**< seek relative to current read point */
+#define RW_SEEK_END 2       /**< seek relative to the end of data */
 
 /**
  *  \name Read/write macros

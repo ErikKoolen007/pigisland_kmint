@@ -33,12 +33,12 @@ int main()
 	map.graph()[0].tagged(true);
 	s.build_actor<play::background>(math::size(1024, 768),graphics::image{map.background_image()});
 	s.build_actor<play::map_actor>(math::vector2d{0.f, 0.f}, map.graph());
-	s.build_actor<pigisland::shark>(map.graph(), score_card, new_round_signal);
-	s.build_actor<pigisland::boat>(map.graph(), score_card);
+	pigisland::shark& shark = s.build_actor<pigisland::shark>(map.graph(), score_card, new_round_signal);
+	pigisland::boat& boat = s.build_actor<pigisland::boat>(map.graph(), score_card);
 
 	//Create first generation of pigs
-	ga.create_generation_0();
-
+	ga.create_generation_0(shark, boat);
+	 
 	// Maak een event_source aan (hieruit kun je alle events halen, zoals
 	// toetsaanslagen)
 	ui::events::event_source event_source{};
@@ -61,7 +61,7 @@ int main()
 		if(round_ended)
 		{
 			round_ended = false;
-			ga.new_generation();
+			ga.new_generation(shark, boat);
 		}
 
 		for (ui::events::event& e : event_source)
