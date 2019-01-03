@@ -1,6 +1,7 @@
 #include "kmint/pigisland/pig.hpp"
 #include "kmint/math/angle.hpp"
 #include "kmint/pigisland/resources.hpp"
+#include <iostream>
 
 namespace kmint {
 namespace pigisland {
@@ -24,10 +25,10 @@ void pig::act(delta_time dt) {
 	velocity += acceleration * to_seconds(dt);
 
 	//make sure vehicle does not exceed maximum velocity
-	truncate(velocity, maxSpeed);
+	const math::vector2d truncated_velocity = truncate(velocity, maxSpeed);
 
 	//update the position
-	move(velocity * to_seconds(dt));
+	move(truncated_velocity * to_seconds(dt));
 
 	//update the heading if the vehicle has a non zero velocity
 	if (dot(velocity, velocity) > 0.00000001)
