@@ -3,6 +3,7 @@
 
 #include "kmint/play.hpp"
 #include "chromosome.h"
+#include "properties/steering_behaviors.h"
 
 namespace kmint {
 namespace pigisland {
