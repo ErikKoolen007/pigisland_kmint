@@ -25,7 +25,7 @@ pig::pig(math::vector2d location)
 	mass_ = 1.25;
 	maxSpeed_ = 0.0001;
 	maxForce_ = 500;
-	weightWallAvoidance_ = 1000;
+	weightWallAvoidance_ = 10000000;
 
 	walls = pigisland::walls();
 }
