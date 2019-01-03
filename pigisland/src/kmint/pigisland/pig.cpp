@@ -35,6 +35,9 @@ void pig::act(delta_time dt) {
 	//update velocity
 	velocity += acceleration * to_seconds(dt);
 
+	//make sure vehicle does not exceed maximum velocity
+	truncate(velocity, maxSpeed);
+
 	//update the position
 	move(velocity * to_seconds(dt));
 

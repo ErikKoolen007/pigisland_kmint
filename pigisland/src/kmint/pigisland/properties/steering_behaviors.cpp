@@ -28,12 +28,12 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wander(p
 		actor.location());
 
 	//and steer toward it
-	return targetLocal- actor.location();
+	return targetWorld- actor.location();
 }
 
 kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::normalize(kmint::math::vector2d target)
 { 
-	double vector_length = std::sqrt(std::pow(target.x(), 2) * std::pow(target.y(), 2));
+	double vector_length = std::sqrt(std::pow(target.x(), 2) + std::pow(target.y(), 2));
 
 	if (vector_length > std::numeric_limits<double>::epsilon())
 	{
@@ -65,3 +65,22 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::normaliz
 
 	return TransPoint;
 }
+
+ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::truncate(double max, kmint::math::vector2d& target)
+ {
+	 double vector_length = std::sqrt(std::pow(target.x(), 2) + std::pow(target.y(), 2));
+	 
+	 if (vector_length > max)
+	 {
+		 target = normalize(target);
+
+		 target *= max;
+	 }
+	 return target;
+ }
+
+ double kmint::pigisland::properties::steering_behaviors::fRand(double fMin, double fMax)
+ {
+	 double f = (double)rand() / RAND_MAX;
+	 return fMin + f * (fMax - fMin);
+ }
