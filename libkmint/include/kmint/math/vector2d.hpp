@@ -122,6 +122,17 @@ constexpr basic_vector2d<Scalar> normalize(basic_vector2d<Scalar> p) {
 }
 
 template <typename Scalar>
+constexpr basic_vector2d<Scalar> truncate(basic_vector2d<Scalar> p, double max) {
+  double vector_length = std::sqrt(std::pow(p.x(), 2) + std::pow(p.y(), 2));
+	if (vector_length > max) {
+    p = normalize(p);
+
+    p *= max;
+  }
+    return p;
+}
+
+template <typename Scalar>
 constexpr auto distance(basic_vector2d<Scalar> from,
                         basic_vector2d<Scalar> to) {
   return norm(from - to);

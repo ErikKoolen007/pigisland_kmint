@@ -8,6 +8,7 @@
 #include "kmint/pigisland/score_card.h"
 #include "kmint/pigisland/signals/new_round_signal.h"
 #include "kmint/pigisland/genetic_algorithm.h"
+#include <windows.h>
 
 using namespace kmint;
 
@@ -54,11 +55,11 @@ int main()
 	// main_loop stuurt alle actors aan.
 	main_loop(s, window, [&](delta_time dt, loop_controls& ctl)
 	{
+		//Sleep(1000);
 		// gebruik dt om te kijken hoeveel tijd versterken is
 		// sinds de vorige keer dat deze lambda werd aangeroepen
 		// loop controls is een object met eigenschappen die je kunt gebruiken om de
 		// main-loop aan te sturen.
-
 		if(round_ended)
 		{
 			round_ended = false;

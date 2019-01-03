@@ -24,6 +24,11 @@ public:
 private:
   play::image_drawable drawable_;
   chromosome chromosome_;
+  properties::steering_behaviors behaviors_;
+  double mass = 1;
+  math::vector2d velocity = math::vector2d(behaviors_.fRand(-0.001, 0.001), behaviors_.fRand(-0.001, 0.001));
+  //the maximum speed at which this entity may travel.
+  double maxSpeed = 0.01;
 };
 
 } // namespace pigisland
