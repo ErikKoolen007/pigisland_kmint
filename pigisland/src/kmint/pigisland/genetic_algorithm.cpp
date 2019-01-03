@@ -6,9 +6,7 @@ void kmint::pigisland::genetic_algorithm::create_generation_0() const
 {
 	for (int i = 0; i < 100; ++i)
 	{
-		stage_->build_actor<pigisland::pig>(math::vector2d(i * 10.0f, i * 6.0f), 
-			chromosome{random_scalar(-1.0f, 1.0f), random_scalar(-1.0f, 1.0f), 
-				random_scalar(0.0f, 1.0f), random_scalar(0.0f, 1.0f), random_scalar(0.0f, 1.0f) });
+		stage_->build_actor<pigisland::pig>(random_location(), chromosome{});
 	}
 }
 
@@ -30,6 +28,28 @@ void kmint::pigisland::genetic_algorithm::new_generation()
 	//Create 100 new ones
 	for (int i = 0; i < 100; ++i)
 	{
-		stage_->build_actor<pigisland::pig>(math::vector2d(i * 10.0f, i * 6.0f), chromosome{ 1.0f, 1.0f, 1.0f, 1.0f, 1.0f });
+		stage_->build_actor<pigisland::pig>(random_location(), chromosome{});
 	}
+}
+
+kmint::math::vector2d kmint::pigisland::genetic_algorithm::random_location()
+{
+	const float random_y = random_scalar(32.0f, 736.0f);
+	float random_x;
+
+	//Rough boundaries so pigs won't spawn on the 4 grass islands
+	if(random_y >= 32.0f && random_y <= 145.0f)
+	{
+		random_x = random_scalar(320.0f, 864.0f);
+	}
+	else if(random_y >= 512.0f && random_y <= 736.0f)
+	{
+		random_x = random_scalar(256.0f, 768.0f);
+	}
+	else
+	{
+		random_x = random_scalar(32.0f, 992.0f);
+	}
+
+	return math::vector2d{ random_x, random_y };
 }

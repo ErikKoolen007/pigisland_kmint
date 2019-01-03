@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include "kmint/random.hpp"
 
 namespace kmint
 {
@@ -9,13 +10,13 @@ namespace kmint
 		{
 			std::array<float, 5> chromosome_array_{};
 		public:
-			chromosome(float shark_attraction, float boat_attraction, float cohesion, float separation, float alignment)
+			chromosome()
 			{
-				chromosome_array_[0] = shark_attraction;
-				chromosome_array_[1] = boat_attraction;
-				chromosome_array_[2] = cohesion;
-				chromosome_array_[3] = separation;
-				chromosome_array_[4] = alignment;
+				chromosome_array_[0] = random_scalar(-1.0f, 1.0f);
+				chromosome_array_[1] = random_scalar(-1.0f, 1.0f);
+				chromosome_array_[2] = random_scalar(0.0f, 1.0f);
+				chromosome_array_[3] = random_scalar(0.0f, 1.0f);
+				chromosome_array_[4] = random_scalar(0.0f, 1.0f);
 			}
 
 			//[0] = shark_attraction

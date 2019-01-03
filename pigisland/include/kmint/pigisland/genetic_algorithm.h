@@ -8,6 +8,8 @@ namespace kmint
 		class genetic_algorithm
 		{
 			play::stage* stage_;
+
+			static math::vector2d random_location();
 		public:
 			genetic_algorithm(play::stage& s) : stage_(&s)
 			{

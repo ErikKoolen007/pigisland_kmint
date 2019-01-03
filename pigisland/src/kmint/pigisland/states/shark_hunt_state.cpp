@@ -22,11 +22,6 @@ namespace kmint
 							}
 						});
 						path_to_pig_ = a_star_.a_star_search(shark.node(), *node);
-						//TODO remove if pigs can move
-						if(path_to_pig_.size() <= 1)
-						{
-							shark.get_fsm().change_state("shark_scared_state");
-						}
 						return;
 					}
 				}

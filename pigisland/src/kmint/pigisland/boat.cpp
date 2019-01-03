@@ -34,8 +34,8 @@ namespace kmint
 				{
 					a.set_actor_removable();
 					score_card_->pig_saved();
-					auto* pig = dynamic_cast<pigisland::pig*>(&a);
-					std::cout << pig->get_chromosome().get()[0] << "\n";
+					//auto* pig = dynamic_cast<pigisland::pig*>(&a);
+					//std::cout << pig->get_chromosome().get()[0] << "\n";
  					break;
 				}
 			}
