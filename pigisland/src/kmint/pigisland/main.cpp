@@ -22,10 +22,8 @@ int main()
 	// maak een podium aan
 	play::stage s{};
 
-	//initialize genetic algorithm
-	pigisland::genetic_algorithm ga{s};
-
 	pigisland::score_card score_card{};
+	pigisland::genetic_algorithm ga{s, score_card};
 	pigisland::signals::new_round_signal new_round_signal;
 	bool round_ended = false;
 

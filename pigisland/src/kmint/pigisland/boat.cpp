@@ -32,10 +32,10 @@ namespace kmint
 
 				if (a.name() == "pig" && state_machine_->is_in_state("boat_wander_state"))
 				{
-					a.set_actor_removable();
+					auto* pig = dynamic_cast<pigisland::pig*>(&a);
+					score_card_->save_chromosome(pig->get_chromosome());
 					score_card_->pig_saved();
-					//auto* pig = dynamic_cast<pigisland::pig*>(&a);
-					//std::cout << pig->get_chromosome().get()[0] << "\n";
+					a.set_actor_removable();
  					break;
 				}
 			}
