@@ -71,7 +71,11 @@ void pig::act(delta_time dt) {
 	//group behaviour
 	this->tagNeighbors(*this, neighbor_vector, 50);
 
-	force = behaviors_.separation(*this, neighbor_vector) * weightSeparation_;;
+	force = behaviors_.separation(*this, neighbor_vector) * weightSeparation_;
+
+	behaviors_.accumulate_force(steeringForce, force, *this);
+
+	force = behaviors_.alignment(*this, neighbor_vector) * weightAlignment_;
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 

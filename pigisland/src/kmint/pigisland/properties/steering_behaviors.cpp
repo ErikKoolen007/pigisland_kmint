@@ -139,6 +139,33 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::separati
 	return SteeringForce;
 }
 
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::alignment(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors)
+{
+	//used to record the average heading of the neighbors
+	kmint::math::vector2d AverageHeading;
+	//used to count the number of vehicles in the neighborhood
+	int NeighborCount = 0;
+		//iterate through all the tagged vehicles and sum their heading vectors
+		for (int a = 0; a < neighbors.size(); ++a)
+		{
+			//make sure *this* agent isn't included in the calculations and that
+			//the agent being examined is close enough
+			if ((*neighbors[a] != actor) && neighbors[a]->isTagged())
+			{
+				AverageHeading += neighbors[a]->heading();
+				++NeighborCount;
+			}
+		}
+	//if the neighborhood contained one or more vehicles, average their
+	//heading vectors.
+	if (NeighborCount > 0)
+	{
+		AverageHeading /= (double)NeighborCount;
+		AverageHeading -= actor.heading();
+	}
+	return AverageHeading;
+}
+
 double kmint::pigisland::properties::steering_behaviors::calcVLength(kmint::math::vector2d target) {
 	return std::sqrt(std::pow(target.x(), 2) + std::pow(target.y(), 2));
 }
