@@ -62,18 +62,18 @@ protected:
     // iterate through all entities checking for range
     for (typename conT::iterator curEntity = ContainerOfEntities.begin();
          curEntity != ContainerOfEntities.end(); ++curEntity) {
-      // first clear any current tag
-      (*curEntity).unTag();
-      math::vector2d to = (*curEntity).location() - entity.location();
-      // the bounding radius of the other is taken into account by adding it
-      // to the range
-      double range = radius + (*curEntity).boundingRadius();
-      // if entity within range, tag for further consideration. (working in
-      // distance-squared space to avoid sqrts)
-      if ((/*(*curEntity) != entity) &&*/
-          ((to.x() * to.x() + to.y() * to.y()) < range * range))) {
-        (*curEntity).tag();
-      }
+        // first clear any current tag
+        (*curEntity)->unTag();
+        math::vector2d to = (*curEntity)->location() - entity.location();
+        // the bounding radius of the other is taken into account by adding it
+        // to the range
+        double range = radius + (*curEntity)->boundingRadius();
+        // if entity within range, tag for further consideration. (working in
+        // distance-squared space to avoid sqrts)
+        if ((/*(*curEntity) != entity) &&*/
+            ((to.x() * to.x() + to.y() * to.y()) < range * range))) {
+          (*curEntity)->tag();
+        }
     } // next entity
   }
 

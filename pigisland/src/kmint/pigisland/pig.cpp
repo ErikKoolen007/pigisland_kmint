@@ -55,8 +55,18 @@ void pig::act(delta_time dt) {
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
+	std::vector<pig*> neighbor_vector{};
+	for (play::actor& a : stage_)
+	{
+		if (a.name() == "pig")
+		{
+			pig* p = static_cast<pig*>(&a);
+			neighbor_vector.push_back(p);
+		}
+	}
+
 	//group behaviour
-	//this->tagNeighbors(*this, actors_, 50);
+	this->tagNeighbors(*this, neighbor_vector, 50);
 
 	//Acceleration = Force/Mass
 	math::vector2d acceleration = steeringForce / mass_;
