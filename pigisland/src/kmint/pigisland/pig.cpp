@@ -22,18 +22,18 @@ pig::pig(math::vector2d location, play::stage& s, chromosome chromosome,
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.00080));
 	mass_ = 1;
-	maxSpeed_ = 50;
-	maxForce_ = 75;
+	maxSpeed_ = 40;
+	maxForce_ = 100;
 	//NOTE: these weight modifiers are used to tweak
 	weightWallAvoidance_ = 10000;
-	weightSeek_ = 10;
-	weightFlee_ = 10;
-	weightWander_ = 10;
-	weightSeparation_ = 25;
-	weightCohesion_ = 0.1;
-	weightAlignment_ = 1;
+	weightSeek_ = 35;
+	weightFlee_ = 35;
+	weightWander_ = 8;
+	weightSeparation_ = 10;
+	weightCohesion_ = 0.125;
+	weightAlignment_ = 7.5;
 	neightborTag_ = false;
-	boundingRadius_ = 50;
+	boundingRadius_ = 25;
 
 	walls = pigisland::walls();
 }
@@ -69,7 +69,7 @@ void pig::act(delta_time dt) {
 	}
 
 	//group behaviour
-	this->tagNeighbors(*this, neighbor_vector, 50);
+	this->tagNeighbors(*this, neighbor_vector, 25);
 
 	force = behaviors_.separation(*this, neighbor_vector) * weightSeparation_ * chromosome_.get()[3];
 

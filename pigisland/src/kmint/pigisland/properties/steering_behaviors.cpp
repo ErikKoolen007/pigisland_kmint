@@ -97,7 +97,7 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::seek(kmi
 {
 	//calculate this with neigbors
 	const double seekDistance = distance(actor.location(), TargetPos);
-	if (seekDistance > 125)
+	if (seekDistance > 150)
 	{
 		return math::vector2d(0, 0);
 	}
@@ -111,7 +111,7 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::flee(kmi
 {
 	//calculate this with neigbors
 	const double panicDistance = distance(actor.location(), TargetPos);
-	if (panicDistance > 75)
+	if (panicDistance > 125)
 	{
 		return math::vector2d(0, 0);
 	}

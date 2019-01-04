@@ -44,8 +44,8 @@ namespace kmint
 				//a vertex buffer to contain the feelers rqd for wall avoidance  
 				std::vector<math::vector2d> m_Feelers = std::vector<math::vector2d>(3);
 				kmint::math::vector2d wander_target;
-				double wander_radius = 0.5;
-				double wander_distance = 0.5;
+				double wander_radius = 0.35;
+				double wander_distance = 0.25;
 				double wander_jitter = 1.0;
 
 				kmint::math::vector2d PointToWorldSpace(const kmint::math::vector2d& point,
