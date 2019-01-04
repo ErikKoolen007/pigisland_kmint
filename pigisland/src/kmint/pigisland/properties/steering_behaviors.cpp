@@ -166,6 +166,32 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::alignmen
 	return AverageHeading;
 }
 
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::cohesion(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors)
+{
+	//first find the center of mass of all the agents
+	kmint::math::vector2d centerOfMass, SteeringForce;
+	int NeighborCount = 0;
+	//iterate through the neighbors and sum up all the position vectors
+	for (int a = 0; a < neighbors.size(); ++a)
+	{
+		//make sure *this* agent isn't included in the calculations and that
+		//the agent being examined is a neighbor
+		if ((*neighbors[a] != actor) && neighbors[a]->isTagged())
+		{
+			centerOfMass += neighbors[a]->location();
+			++NeighborCount;
+		}
+	}
+	if (NeighborCount > 0)
+	{
+		//the center of mass is the average of the sum of positions
+		centerOfMass /= (double)NeighborCount;
+		//now seek toward that position
+		SteeringForce = seek(centerOfMass, actor);
+	}
+	return SteeringForce;
+}
+
 double kmint::pigisland::properties::steering_behaviors::calcVLength(kmint::math::vector2d target) {
 	return std::sqrt(std::pow(target.x(), 2) + std::pow(target.y(), 2));
 }

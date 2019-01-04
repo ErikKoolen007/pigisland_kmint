@@ -29,9 +29,9 @@ pig::pig(math::vector2d location, play::stage& s, chromosome chromosome,
 	weightSeek_ = 2.5;
 	weightFlee_ = 2.5;
 	weightWander_ = 1;
-	weightSeparation_ = 100;
-	weightCohesion_ = 1;
-	weightAlignment_ = 1;
+	weightSeparation_ = 10;
+	weightCohesion_ = 10;
+	weightAlignment_ = 10;
 	neightborTag_ = false;
 	boundingRadius_ = 50;
 
@@ -77,6 +77,10 @@ void pig::act(delta_time dt) {
 
 	force = behaviors_.alignment(*this, neighbor_vector) * weightAlignment_;
 
+	behaviors_.accumulate_force(steeringForce, force, *this);
+	
+	force = behaviors_.cohesion(*this, neighbor_vector) * weightCohesion_;
+	
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
 	//Acceleration = Force/Mass

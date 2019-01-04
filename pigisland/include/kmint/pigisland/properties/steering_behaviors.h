@@ -32,6 +32,8 @@ namespace kmint
 				kmint::math::vector2d separation(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors);
 				kmint::math::vector2d alignment(kmint::play::free_roaming_actor& actor,
 				                                std::vector<pigisland::pig*>& neighbors);
+				kmint::math::vector2d cohesion(kmint::play::free_roaming_actor& actor,
+				                               std::vector<pigisland::pig*>& neighbors);
 				kmint::math::vector2d normalize(kmint::math::vector2d target);
 				kmint::math::vector2d truncate(double max, kmint::math::vector2d & target);
 				double fRand(double fMin, double fMax);
