@@ -111,7 +111,7 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::flee(kmi
 {
 	//calculate this with neigbors
 	const double panicDistance = distance(actor.location(), TargetPos);
-	if (panicDistance > 125)
+	if (panicDistance > 75)
 	{
 		return math::vector2d(0, 0);
 	}

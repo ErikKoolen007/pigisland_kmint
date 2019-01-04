@@ -21,17 +21,17 @@ pig::pig(math::vector2d location, play::stage& s, chromosome chromosome,
 {
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.00080));
-	mass_ = 0.1;
+	mass_ = 1;
 	maxSpeed_ = 50;
 	maxForce_ = 75;
 	//NOTE: these weight modifiers are used to tweak
 	weightWallAvoidance_ = 10000;
-	weightSeek_ = 2.5;
-	weightFlee_ = 2.5;
-	weightWander_ = 1;
-	weightSeparation_ = 10;
-	weightCohesion_ = 10;
-	weightAlignment_ = 10;
+	weightSeek_ = 10;
+	weightFlee_ = 10;
+	weightWander_ = 10;
+	weightSeparation_ = 25;
+	weightCohesion_ = 0.1;
+	weightAlignment_ = 1;
 	neightborTag_ = false;
 	boundingRadius_ = 50;
 
@@ -46,11 +46,11 @@ void pig::act(delta_time dt) {
 	//individual behaviours
 	steeringForce = steeringForce += behaviors_.wander(*this) * weightWander_;
 
-	force = behaviors_.seek(boat.location(), *this) * weightSeek_;
+	force = behaviors_.seek(boat.location(), *this) * weightSeek_ * chromosome_.get()[1];
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
-	force = behaviors_.flee(shark.location(), *this) * weightFlee_;
+	force = behaviors_.flee(shark.location(), *this) * weightFlee_ * chromosome_.get()[0];
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
@@ -71,15 +71,15 @@ void pig::act(delta_time dt) {
 	//group behaviour
 	this->tagNeighbors(*this, neighbor_vector, 50);
 
-	force = behaviors_.separation(*this, neighbor_vector) * weightSeparation_;
+	force = behaviors_.separation(*this, neighbor_vector) * weightSeparation_ * chromosome_.get()[3];
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
-	force = behaviors_.alignment(*this, neighbor_vector) * weightAlignment_;
+	force = behaviors_.alignment(*this, neighbor_vector) * weightAlignment_ * chromosome_.get()[4];
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 	
-	force = behaviors_.cohesion(*this, neighbor_vector) * weightCohesion_;
+	force = behaviors_.cohesion(*this, neighbor_vector) * weightCohesion_ * chromosome_.get()[2];
 	
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
