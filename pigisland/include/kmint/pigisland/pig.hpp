@@ -12,7 +12,7 @@ namespace pigisland {
 
 class pig : public play::free_roaming_actor {
 public:
-	pig(math::vector2d location, chromosome chromosome, pigisland::shark& shark,
+	pig(math::vector2d location, play::stage& s, chromosome chromosome, pigisland::shark& shark,
 		pigisland::boat& boat);
   const ui::drawable &drawable() const override { return drawable_; }
   void move(math::vector2d delta) { location(location() + delta); }
@@ -26,6 +26,7 @@ public:
   chromosome& get_chromosome() { return chromosome_; }
 
 private:
+  play::stage& stage_;
   shark& shark;
   boat& boat;
   play::image_drawable drawable_;

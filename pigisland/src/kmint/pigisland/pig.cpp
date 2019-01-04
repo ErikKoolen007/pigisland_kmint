@@ -15,9 +15,9 @@ namespace pigisland {
 //}
 //} // namespace
 
-pig::pig(math::vector2d location, chromosome chromosome,
+pig::pig(math::vector2d location, play::stage& s, chromosome chromosome,
          pigisland::shark& shark, pigisland::boat& boat)
-	: free_roaming_actor{ location }, drawable_{ *this, pig_image() }, chromosome_(chromosome), shark(shark), boat(boat)
+	: free_roaming_actor{ location }, drawable_{ *this, pig_image() }, stage_(s), chromosome_(chromosome), shark(shark), boat(boat)
 {
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.00080));

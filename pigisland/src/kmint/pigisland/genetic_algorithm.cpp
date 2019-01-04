@@ -2,20 +2,16 @@
 #include "kmint/pigisland/pig.hpp"
 #include "kmint/random.hpp"
 
-std::vector<kmint::pigisland::pig*>& kmint::pigisland::genetic_algorithm::create_generation_0(
-	shark& shark, boat& boat)
+void kmint::pigisland::genetic_algorithm::create_generation_0(shark& shark, boat& boat) const
 {
 	for (int i = 0; i < 100; ++i)
 	{
-		pig& pig = stage_->build_actor<pigisland::pig>(random_location(), chromosome{}, shark, boat);
-		pigs.push_back(&pig);
+		stage_->build_actor<pigisland::pig>(random_location(), *stage_, chromosome{}, shark, boat);
 	}
-	return pigs;
 }
 
-std::vector<kmint::pigisland::pig*> kmint::pigisland::genetic_algorithm::new_generation(shark& shark, boat& boat)
+void kmint::pigisland::genetic_algorithm::new_generation(shark& shark, boat& boat)
 {
-	pigs.clear();
 	//Remove all left over pigs
 	std::vector<play::actor*> remove_vector{};
 	for (play::actor& a : *stage_)
@@ -32,10 +28,8 @@ std::vector<kmint::pigisland::pig*> kmint::pigisland::genetic_algorithm::new_gen
 	//Create 100 new ones
 	for (int i = 0; i < 100; ++i)
 	{
-		pig& pig = stage_->build_actor<pigisland::pig>(random_location(), chromosome{}, shark, boat);
-		pigs.push_back(&pig);
+		stage_->build_actor<pigisland::pig>(random_location(), *stage_, chromosome{}, shark, boat);
 	}
-	return pigs;
 }
 
 kmint::math::vector2d kmint::pigisland::genetic_algorithm::random_location()

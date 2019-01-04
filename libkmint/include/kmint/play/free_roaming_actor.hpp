@@ -4,6 +4,7 @@
 #include "kmint/math/vector2d.hpp"
 #include "kmint/pigisland/properties/steering_behaviors.h"
 #include "kmint/play/actor.hpp"
+#include "stage.hpp"
 
 namespace kmint::play {
 /*! \brief Base class for actors that can move freely across the stage.
