@@ -4,6 +4,7 @@
 #include <valarray>
 #include "kmint/pigisland/properties/C2DMatrix.h"
 #include "kmint/pigisland/properties/Wall2D.h"
+#include "kmint/pigisland/pig.hpp"
 
 kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wander(play::free_roaming_actor& actor)
 {
@@ -118,6 +119,24 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::flee(kmi
 	math::vector2d DesiredVelocity = normalize(actor.location() - TargetPos)
 		* actor.maxSpeed();
 	return (DesiredVelocity - actor.velocity());
+}
+
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::separation(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors)
+{
+	kmint::math::vector2d SteeringForce;
+	for (int a = 0; a < neighbors.size(); ++a)
+	{
+		//make sure this agent isn't included in the calculations and that
+		//the agent being examined is close enough.
+		if ((*neighbors[a] != actor) && neighbors[a]->isTagged())
+		{
+			kmint::math::vector2d ToAgent = actor.location() - neighbors[a]->location();
+			//scale the force inversely proportional to the agent's distance
+			//from its neighbor.
+			SteeringForce += normalize(ToAgent) / calcVLength(ToAgent);
+		}
+	}
+	return SteeringForce;
 }
 
 double kmint::pigisland::properties::steering_behaviors::calcVLength(kmint::math::vector2d target) {

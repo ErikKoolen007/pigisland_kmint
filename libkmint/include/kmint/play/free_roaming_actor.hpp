@@ -26,6 +26,7 @@ public:
   double weightFlee() const { return weightFlee_; }
   double weightWander() const { return weightWander_; }
   double boundingRadius() const { return boundingRadius_; }
+  bool isTagged() const { return neightborTag_; }
 
   void velocity(math::vector2d v) { velocity_ = v; }
   void mass(double mass) { mass_ = mass; }
@@ -83,5 +84,16 @@ private:
   math::vector2d side_;
 };
 } // namespace kmint::play
+inline bool operator==(const kmint::play::free_roaming_actor &lhs,
+                       const kmint::play::free_roaming_actor &rhs) {
+  return (lhs.location().x() == rhs.location().x() &&
+          lhs.location().y() == rhs.location().y() &&
+          lhs.velocity().x() == rhs.velocity().x() &&
+          lhs.velocity().y() == rhs.velocity().y());
+}
 
+inline bool operator!=(const kmint::play::free_roaming_actor &lhs,
+                       const kmint::play::free_roaming_actor &rhs) {
+  return !(lhs == rhs);
+}
 #endif
