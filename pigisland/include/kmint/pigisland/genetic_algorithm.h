@@ -2,6 +2,7 @@
 #include "kmint/play/stage.hpp"
 #include "shark.hpp"
 #include "boat.hpp"
+#include "pig.hpp"
 
 namespace kmint
 {
@@ -17,8 +18,11 @@ namespace kmint
 			{
 				
 			}
-			void create_generation_0(shark& shark, boat& boat) const;
-			void new_generation(shark& shark, boat& boat);
+
+			std::vector<kmint::pigisland::pig*>& create_generation_0(shark& shark, boat& boat);
+			std::vector<kmint::pigisland::pig*> new_generation(shark& shark, boat& boat);
+		private:
+			std::vector< pig*> pigs = std::vector<pig*>();
 		};
 	}
 }

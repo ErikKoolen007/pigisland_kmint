@@ -6,16 +6,17 @@
 namespace kmint {
 namespace pigisland {
 
-namespace {
+//namespace {
 
 //math::vector2d random_vector() {
   // auto x = random_scalar(150, 874);
   // auto y = random_scalar(100, 678);
   //return {x, y};
 //}
-} // namespace
+//} // namespace
 
-pig::pig(math::vector2d location, chromosome chromosome, pigisland::shark& shark, pigisland::boat& boat)
+pig::pig(math::vector2d location, chromosome chromosome,
+         pigisland::shark& shark, pigisland::boat& boat)
 	: free_roaming_actor{ location }, drawable_{ *this, pig_image() }, chromosome_(chromosome), shark(shark), boat(boat)
 {
 	behaviors_ = properties::steering_behaviors();
@@ -23,11 +24,13 @@ pig::pig(math::vector2d location, chromosome chromosome, pigisland::shark& shark
 	mass_ = 0.1;
 	maxSpeed_ = 50;
 	maxForce_ = 75;
-	//NOTE: these weight modifiers are very hard modifiers
+	//NOTE: these weight modifiers are used to tweak
 	weightWallAvoidance_ = 10000;
 	weightSeek_ = 2.5;
 	weightFlee_ = 2.5;
 	weightWander_ = 1;
+	neightborTag_ = false;
+	boundingRadius_ = 50;
 
 	walls = pigisland::walls();
 }
@@ -37,6 +40,7 @@ void pig::act(delta_time dt) {
 	kmint::math::vector2d force;
 	math::vector2d steeringForce;
 
+	//individual behaviours
 	steeringForce = steeringForce += behaviors_.wander(*this) * weightWander_;
 
 	force = behaviors_.seek(boat.location(), *this) * weightSeek_;
@@ -50,6 +54,9 @@ void pig::act(delta_time dt) {
 	force = behaviors_.wall_avoidance(walls, *this) * weightWallAvoidance_;
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
+
+	//group behaviour
+	//this->tagNeighbors(*this, actors_, 50);
 
 	//Acceleration = Force/Mass
 	math::vector2d acceleration = steeringForce / mass_;

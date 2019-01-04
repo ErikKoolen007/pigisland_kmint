@@ -24,6 +24,7 @@ public:
   double weightSeek() const { return weightSeek_; }
   double weightFlee() const { return weightFlee_; }
   double weightWander() const { return weightWander_; }
+  double boundingRadius() const { return boundingRadius_; }
 
   void velocity(math::vector2d v) { velocity_ = v; }
   void mass(double mass) { mass_ = mass; }
@@ -33,6 +34,9 @@ public:
   void weightSeek(double weight) { weightSeek_ = weight;  }
   void weightFlee(double weight) { weightFlee_ = weight; }
   void weightWander(double weight) { weightWander_ = weight; }
+  void unTag() { neightborTag_ = false; }
+  void tag() { neightborTag_ = true; }
+  void boundingRadius(double radius) { boundingRadius_ = radius; }
 
   void act(delta_time dt) override {}
 
@@ -46,9 +50,31 @@ protected:
   double weightSeek_;
   double weightFlee_;
   double weightWander_;
+  double neightborTag_;
+  double boundingRadius_;
   void location(math::vector2d loc) { location_ = loc; }
   void heading(math::vector2d heading) { heading_ = heading; }
   void side(math::vector2d side) { side_ = side; }
+
+  template <class T, class conT>
+  void tagNeighbors(const T &entity, conT &ContainerOfEntities, double radius) {
+    // iterate through all entities checking for range
+    for (typename conT::iterator curEntity = ContainerOfEntities.begin();
+         curEntity != ContainerOfEntities.end(); ++curEntity) {
+      // first clear any current tag
+      (*curEntity).unTag();
+      math::vector2d to = (*curEntity).location() - entity.location();
+      // the bounding radius of the other is taken into account by adding it
+      // to the range
+      double range = radius + (*curEntity).boundingRadius();
+      // if entity within range, tag for further consideration. (working in
+      // distance-squared space to avoid sqrts)
+      if ((/*(*curEntity) != entity) &&*/
+          ((to.x() * to.x() + to.y() * to.y()) < range * range))) {
+        (*curEntity).tag();
+      }
+    } // next entity
+  }
 
 private:
   math::vector2d location_;
