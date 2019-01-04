@@ -21,10 +21,15 @@ public:
   double mass() const { return mass_; }
   double maxSpeed() const { return maxSpeed_; }
   double maxForce() const { return maxForce_; }
+
   double weightWallAvoidance() const { return weightWallAvoidance_; }
   double weightSeek() const { return weightSeek_; }
   double weightFlee() const { return weightFlee_; }
   double weightWander() const { return weightWander_; }
+  double weightSeparation() const { return weightSeparation_; }
+  double weightCohesion() const { return weightCohesion_; }
+  double weightAlignment() const { return weightAlignment_; }
+
   double boundingRadius() const { return boundingRadius_; }
   bool isTagged() const { return neightborTag_; }
 
@@ -36,6 +41,9 @@ public:
   void weightSeek(double weight) { weightSeek_ = weight;  }
   void weightFlee(double weight) { weightFlee_ = weight; }
   void weightWander(double weight) { weightWander_ = weight; }
+  void weightSeparation(double weight) { weightSeparation_ = weight; }
+  void weightCohesion(double weight) { weightCohesion_ = weight; }
+  void weightAlignment(double weight) { weightAlignment_ = weight; }
   void unTag() { neightborTag_ = false; }
   void tag() { neightborTag_ = true; }
   void boundingRadius(double radius) { boundingRadius_ = radius; }
@@ -52,6 +60,9 @@ protected:
   double weightSeek_;
   double weightFlee_;
   double weightWander_;
+  double weightSeparation_;
+  double weightAlignment_;
+  double weightCohesion_;
   double neightborTag_;
   double boundingRadius_;
   void location(math::vector2d loc) { location_ = loc; }
