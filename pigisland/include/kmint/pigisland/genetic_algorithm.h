@@ -10,10 +10,11 @@ namespace kmint
 		class genetic_algorithm
 		{
 			play::stage* stage_;
+			score_card* score_card_;
 
 			static math::vector2d random_location();
 		public:
-			genetic_algorithm(play::stage& s) : stage_(&s)
+			genetic_algorithm(play::stage& s, score_card& score_card) : stage_(&s), score_card_(&score_card)
 			{
 				
 			}
