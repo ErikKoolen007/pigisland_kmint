@@ -5,6 +5,12 @@
 #include <vector>
 
 namespace kmint {
+	namespace pigisland {
+		class pig;
+	}
+}
+
+namespace kmint {
 	namespace play {
 		class free_roaming_actor;
 	}
@@ -23,6 +29,11 @@ namespace kmint
 				kmint::math::vector2d wall_avoidance(const std::vector<Wall2D>& walls, play::free_roaming_actor& actor);
 				kmint::math::vector2d seek(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor);
 				kmint::math::vector2d flee(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor);
+				kmint::math::vector2d separation(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors);
+				kmint::math::vector2d alignment(kmint::play::free_roaming_actor& actor,
+				                                std::vector<pigisland::pig*>& neighbors);
+				kmint::math::vector2d cohesion(kmint::play::free_roaming_actor& actor,
+				                               std::vector<pigisland::pig*>& neighbors);
 				kmint::math::vector2d normalize(kmint::math::vector2d target);
 				kmint::math::vector2d truncate(double max, kmint::math::vector2d & target);
 				double fRand(double fMin, double fMax);
@@ -33,9 +44,9 @@ namespace kmint
 				//a vertex buffer to contain the feelers rqd for wall avoidance  
 				std::vector<math::vector2d> m_Feelers = std::vector<math::vector2d>(3);
 				kmint::math::vector2d wander_target;
-				double wander_radius = 0.0015;
-				double wander_distance = 0.002;
-				double wander_jitter = 1000.0;
+				double wander_radius = 0.35;
+				double wander_distance = 0.25;
+				double wander_jitter = 1.0;
 
 				kmint::math::vector2d PointToWorldSpace(const kmint::math::vector2d& point,
 				                                        const kmint::math::vector2d& AgentHeading,

@@ -6,7 +6,7 @@ void kmint::pigisland::genetic_algorithm::create_generation_0(shark& shark, boat
 {
 	for (int i = 0; i < 100; ++i)
 	{
-		stage_->build_actor<pigisland::pig>(random_location(), chromosome{}, shark, boat);
+		stage_->build_actor<pigisland::pig>(random_location(), *stage_, chromosome{}, shark, boat);
 	}
 }
 
@@ -94,7 +94,7 @@ void kmint::pigisland::genetic_algorithm::new_generation(shark& shark, boat& boa
 	//Build new generation
 	for (int i = 0; i < 100; ++i)
 	{
-		stage_->build_actor<pigisland::pig>(random_location(), new_generation_chromosomes[i], shark, boat);
+		stage_->build_actor<pigisland::pig>(random_location(), *stage_, chromosome{}, shark, boat);
 	}
 
 	score_card_->reset_saved_chromosomes();

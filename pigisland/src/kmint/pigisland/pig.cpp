@@ -6,28 +6,34 @@
 namespace kmint {
 namespace pigisland {
 
-namespace {
+//namespace {
 
 //math::vector2d random_vector() {
   // auto x = random_scalar(150, 874);
   // auto y = random_scalar(100, 678);
   //return {x, y};
 //}
-} // namespace
+//} // namespace
 
-pig::pig(math::vector2d location, chromosome chromosome, pigisland::shark& shark, pigisland::boat& boat)
-	: free_roaming_actor{ location }, drawable_{ *this, pig_image() }, chromosome_(chromosome), shark(shark), boat(boat)
+pig::pig(math::vector2d location, play::stage& s, chromosome chromosome,
+         pigisland::shark& shark, pigisland::boat& boat)
+	: free_roaming_actor{ location }, drawable_{ *this, pig_image() }, stage_(s), chromosome_(chromosome), shark(shark), boat(boat)
 {
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.00080));
-	mass_ = 0.1;
-	maxSpeed_ = 50;
-	maxForce_ = 75;
-	//NOTE: these weight modifiers are very hard modifiers
+	mass_ = 1;
+	maxSpeed_ = 40;
+	maxForce_ = 100;
+	//NOTE: these weight modifiers are used to tweak
 	weightWallAvoidance_ = 10000;
-	weightSeek_ = 2.5;
-	weightFlee_ = 2.5;
-	weightWander_ = 1;
+	weightSeek_ = 35;
+	weightFlee_ = 35;
+	weightWander_ = 8;
+	weightSeparation_ = 10;
+	weightCohesion_ = 0.125;
+	weightAlignment_ = 7.5;
+	neightborTag_ = false;
+	boundingRadius_ = 25;
 
 	walls = pigisland::walls();
 }
@@ -37,18 +43,44 @@ void pig::act(delta_time dt) {
 	kmint::math::vector2d force;
 	math::vector2d steeringForce;
 
+	//individual behaviours
 	steeringForce = steeringForce += behaviors_.wander(*this) * weightWander_;
 
-	force = behaviors_.seek(boat.location(), *this) * weightSeek_;
+	force = behaviors_.seek(boat.location(), *this) * weightSeek_ * chromosome_.get()[1];
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
-	force = behaviors_.flee(shark.location(), *this) * weightFlee_;
+	force = behaviors_.flee(shark.location(), *this) * weightFlee_ * chromosome_.get()[0];
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
 	force = behaviors_.wall_avoidance(walls, *this) * weightWallAvoidance_;
 
+	behaviors_.accumulate_force(steeringForce, force, *this);
+
+	std::vector<pig*> neighbor_vector{};
+	for (play::actor& a : stage_)
+	{
+		if (a.name() == "pig")
+		{
+			pig* p = static_cast<pig*>(&a);
+			neighbor_vector.push_back(p);
+		}
+	}
+
+	//group behaviour
+	this->tagNeighbors(*this, neighbor_vector, 25);
+
+	force = behaviors_.separation(*this, neighbor_vector) * weightSeparation_ * chromosome_.get()[3];
+
+	behaviors_.accumulate_force(steeringForce, force, *this);
+
+	force = behaviors_.alignment(*this, neighbor_vector) * weightAlignment_ * chromosome_.get()[4];
+
+	behaviors_.accumulate_force(steeringForce, force, *this);
+	
+	force = behaviors_.cohesion(*this, neighbor_vector) * weightCohesion_ * chromosome_.get()[2];
+	
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
 	//Acceleration = Force/Mass

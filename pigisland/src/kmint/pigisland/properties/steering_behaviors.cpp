@@ -4,6 +4,7 @@
 #include <valarray>
 #include "kmint/pigisland/properties/C2DMatrix.h"
 #include "kmint/pigisland/properties/Wall2D.h"
+#include "kmint/pigisland/pig.hpp"
 
 kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wander(play::free_roaming_actor& actor)
 {
@@ -96,7 +97,7 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::seek(kmi
 {
 	//calculate this with neigbors
 	const double seekDistance = distance(actor.location(), TargetPos);
-	if (seekDistance > 125)
+	if (seekDistance > 150)
 	{
 		return math::vector2d(0, 0);
 	}
@@ -118,6 +119,77 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::flee(kmi
 	math::vector2d DesiredVelocity = normalize(actor.location() - TargetPos)
 		* actor.maxSpeed();
 	return (DesiredVelocity - actor.velocity());
+}
+
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::separation(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors)
+{
+	kmint::math::vector2d SteeringForce;
+	for (int a = 0; a < neighbors.size(); ++a)
+	{
+		//make sure this agent isn't included in the calculations and that
+		//the agent being examined is close enough.
+		if ((*neighbors[a] != actor) && neighbors[a]->isTagged())
+		{
+			kmint::math::vector2d ToAgent = actor.location() - neighbors[a]->location();
+			//scale the force inversely proportional to the agent's distance
+			//from its neighbor.
+			SteeringForce += normalize(ToAgent) / calcVLength(ToAgent);
+		}
+	}
+	return SteeringForce;
+}
+
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::alignment(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors)
+{
+	//used to record the average heading of the neighbors
+	kmint::math::vector2d AverageHeading;
+	//used to count the number of vehicles in the neighborhood
+	int NeighborCount = 0;
+		//iterate through all the tagged vehicles and sum their heading vectors
+		for (int a = 0; a < neighbors.size(); ++a)
+		{
+			//make sure *this* agent isn't included in the calculations and that
+			//the agent being examined is close enough
+			if ((*neighbors[a] != actor) && neighbors[a]->isTagged())
+			{
+				AverageHeading += neighbors[a]->heading();
+				++NeighborCount;
+			}
+		}
+	//if the neighborhood contained one or more vehicles, average their
+	//heading vectors.
+	if (NeighborCount > 0)
+	{
+		AverageHeading /= (double)NeighborCount;
+		AverageHeading -= actor.heading();
+	}
+	return AverageHeading;
+}
+
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::cohesion(kmint::play::free_roaming_actor& actor, std::vector<pigisland::pig*>& neighbors)
+{
+	//first find the center of mass of all the agents
+	kmint::math::vector2d centerOfMass, SteeringForce;
+	int NeighborCount = 0;
+	//iterate through the neighbors and sum up all the position vectors
+	for (int a = 0; a < neighbors.size(); ++a)
+	{
+		//make sure *this* agent isn't included in the calculations and that
+		//the agent being examined is a neighbor
+		if ((*neighbors[a] != actor) && neighbors[a]->isTagged())
+		{
+			centerOfMass += neighbors[a]->location();
+			++NeighborCount;
+		}
+	}
+	if (NeighborCount > 0)
+	{
+		//the center of mass is the average of the sum of positions
+		centerOfMass /= (double)NeighborCount;
+		//now seek toward that position
+		SteeringForce = seek(centerOfMass, actor);
+	}
+	return SteeringForce;
 }
 
 double kmint::pigisland::properties::steering_behaviors::calcVLength(kmint::math::vector2d target) {
