@@ -94,7 +94,28 @@ kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::wall_avo
 
 kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::seek(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor)
 {
+	//calculate this with neigbors
+	const double seekDistance = distance(actor.location(), TargetPos);
+	if (seekDistance > 125)
+	{
+		return math::vector2d(0, 0);
+	}
+
 	kmint::math::vector2d DesiredVelocity = normalize(TargetPos - actor.location())
+		* actor.maxSpeed();
+	return (DesiredVelocity - actor.velocity());
+}
+
+kmint::math::vector2d kmint::pigisland::properties::steering_behaviors::flee(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor)
+{
+	//calculate this with neigbors
+	const double panicDistance = distance(actor.location(), TargetPos);
+	if (panicDistance > 125)
+	{
+		return math::vector2d(0, 0);
+	}
+
+	math::vector2d DesiredVelocity = normalize(actor.location() - TargetPos)
 		* actor.maxSpeed();
 	return (DesiredVelocity - actor.velocity());
 }

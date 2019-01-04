@@ -22,6 +22,8 @@ public:
   double maxForce() const { return maxForce_; }
   double weightWallAvoidance() const { return weightWallAvoidance_; }
   double weightSeek() const { return weightSeek_; }
+  double weightFlee() const { return weightFlee_; }
+  double weightWander() const { return weightWander_; }
 
   void velocity(math::vector2d v) { velocity_ = v; }
   void mass(double mass) { mass_ = mass; }
@@ -29,6 +31,8 @@ public:
   void maxForce(double maxForce) { maxForce_ = maxForce; }
   void weightWallAvoidance(double weight) { weightWallAvoidance_ = weight; }
   void weightSeek(double weight) { weightSeek_ = weight;  }
+  void weightFlee(double weight) { weightFlee_ = weight; }
+  void weightWander(double weight) { weightWander_ = weight; }
 
   void act(delta_time dt) override {}
 
@@ -40,6 +44,8 @@ protected:
   double maxForce_;
   double weightWallAvoidance_;
   double weightSeek_;
+  double weightFlee_;
+  double weightWander_;
   void location(math::vector2d loc) { location_ = loc; }
   void heading(math::vector2d heading) { heading_ = heading; }
   void side(math::vector2d side) { side_ = side; }

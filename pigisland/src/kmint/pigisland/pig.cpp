@@ -8,24 +8,26 @@ namespace pigisland {
 
 namespace {
 
-math::vector2d random_vector() {
-  auto x = random_scalar(150, 874);
-  auto y = random_scalar(100, 678);
-  return {x, y};
-}
+//math::vector2d random_vector() {
+  // auto x = random_scalar(150, 874);
+  // auto y = random_scalar(100, 678);
+  //return {x, y};
+//}
 } // namespace
 
 pig::pig(math::vector2d location, chromosome chromosome, pigisland::shark& shark, pigisland::boat& boat)
-	: free_roaming_actor{ random_vector() }, drawable_{ *this, pig_image() }, chromosome_(chromosome), shark(shark), boat(boat)
+	: free_roaming_actor{ location }, drawable_{ *this, pig_image() }, chromosome_(chromosome), shark(shark), boat(boat)
 {
 	behaviors_ = properties::steering_behaviors();
-	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.0008));
-	mass_ = 0.25;
+	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.00080));
+	mass_ = 0.1;
 	maxSpeed_ = 50;
 	maxForce_ = 75;
 	//NOTE: these weight modifiers are very hard modifiers
-	weightWallAvoidance_ = 1;
-	weightSeek_ = 0.0075;
+	weightWallAvoidance_ = 10000;
+	weightSeek_ = 2.5;
+	weightFlee_ = 2.5;
+	weightWander_ = 1;
 
 	walls = pigisland::walls();
 }
@@ -35,9 +37,13 @@ void pig::act(delta_time dt) {
 	kmint::math::vector2d force;
 	math::vector2d steeringForce;
 
-	steeringForce = steeringForce += behaviors_.wander(*this);
+	steeringForce = steeringForce += behaviors_.wander(*this) * weightWander_;
 
 	force = behaviors_.seek(boat.location(), *this) * weightSeek_;
+
+	behaviors_.accumulate_force(steeringForce, force, *this);
+
+	force = behaviors_.flee(shark.location(), *this) * weightFlee_;
 
 	behaviors_.accumulate_force(steeringForce, force, *this);
 
@@ -52,7 +58,7 @@ void pig::act(delta_time dt) {
 	velocity_ += acceleration * to_seconds(dt);
 
 	//make sure vehicle does not exceed maximum velocity_
-	truncate(velocity_, maxSpeed_);
+	velocity_ = truncate(velocity_, maxSpeed_);
 
 	//update the position
 	move(velocity_ * to_seconds(dt));

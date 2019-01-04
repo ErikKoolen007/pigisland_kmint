@@ -22,6 +22,7 @@ namespace kmint
 				kmint::math::vector2d wander(play::free_roaming_actor& actor);
 				kmint::math::vector2d wall_avoidance(const std::vector<Wall2D>& walls, play::free_roaming_actor& actor);
 				kmint::math::vector2d seek(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor);
+				kmint::math::vector2d flee(kmint::math::vector2d TargetPos, kmint::play::free_roaming_actor& actor);
 				kmint::math::vector2d normalize(kmint::math::vector2d target);
 				kmint::math::vector2d truncate(double max, kmint::math::vector2d & target);
 				double fRand(double fMin, double fMax);
