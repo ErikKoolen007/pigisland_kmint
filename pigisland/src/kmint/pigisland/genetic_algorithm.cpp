@@ -37,12 +37,6 @@ void kmint::pigisland::genetic_algorithm::new_generation(shark& shark, boat& boa
 		return;
 	}
 
-	bool mutate = false;
-	if(random_int(0, 100) == 67)
-	{
-		mutate = true;
-	}
-
 	//Fitness = boat reached is good
 	//Get a parent from the boat and pair it with a left over pig(left over pig survived too so should have something good(or luck))
 	for(int i = 0; i < number_of_pigs_to_generate; ++i)
@@ -72,16 +66,19 @@ void kmint::pigisland::genetic_algorithm::new_generation(shark& shark, boat& boa
 			child.get().at(k) = random_parent_b.get().at(k);
 		}
 
-		if(mutate)
-		{
-			const int random_gene = random_int(0, 5);
-			if (random_gene > 1)
-				child.get().at(random_gene) = random_scalar(0.0f, 1.0f);
-			else
-				child.get().at(random_gene) = random_scalar(-1.0f, 1.0f);
-		}
-
 		new_generation_chromosomes.push_back(child);
+	}
+
+	//Mutate one child with a chance of 1/100.
+	if (random_int(0, 100) == 67)
+	{
+		const int random_child = random_int(0, 100);
+		const int random_gene = random_int(0, 5);
+
+		if (random_gene > 1)
+			new_generation_chromosomes.at(random_child).get().at(random_gene) = random_scalar(0.0f, 1.0f);
+		else
+			new_generation_chromosomes.at(random_child).get().at(random_gene) = random_scalar(-1.0f, 1.0f);
 	}
 
 	//Remove old still living pigs
