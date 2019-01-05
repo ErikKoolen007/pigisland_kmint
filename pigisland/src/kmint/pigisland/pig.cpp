@@ -6,18 +6,9 @@
 namespace kmint {
 namespace pigisland {
 
-//namespace {
-
-//math::vector2d random_vector() {
-  // auto x = random_scalar(150, 874);
-  // auto y = random_scalar(100, 678);
-  //return {x, y};
-//}
-//} // namespace
-
 pig::pig(math::vector2d location, play::stage& s, chromosome chromosome,
          pigisland::shark& shark, pigisland::boat& boat)
-	: free_roaming_actor{ location }, drawable_{ *this, pig_image() }, stage_(s), chromosome_(chromosome), shark(shark), boat(boat)
+	: free_roaming_actor{ location }, stage_(s), shark(shark), boat(boat), drawable_{ *this, pig_image() }, chromosome_(chromosome)
 {
 	behaviors_ = properties::steering_behaviors();
 	velocity_ = math::vector2d(behaviors_.fRand(-0.0008, 0.0008), behaviors_.fRand(-0.0008, 0.00080));

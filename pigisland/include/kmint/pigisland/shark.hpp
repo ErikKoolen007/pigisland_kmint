@@ -18,7 +18,7 @@ namespace kmint
 			shark(kmint::map::map_graph& g, score_card& score_card, signals::new_round_signal& new_round_signal);
 			ui::drawable const& drawable() const override { return drawable_; }
 			bool incorporeal() const override { return false; }
-			scalar radius() const override { return 22.7; }
+			scalar radius() const override { return 16.0; }
 			bool perceptive() const override { return true; }
 			scalar range_of_perception() const override { return 100.0f; }
 			void act(delta_time dt) override;

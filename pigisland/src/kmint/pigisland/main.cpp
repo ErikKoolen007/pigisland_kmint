@@ -70,6 +70,26 @@ int main()
 			// bijbehorende quit_event
 			//
 			e.handle_quit([&ctl](ui::events::quit_event qe) { ctl.quit = true; });
+			e.handle_key_up([&ctl](ui::events::key_event k)
+			{
+				switch (k.key)
+				{
+				case ui::events::key::p:
+					if (ctl.pause)
+						ctl.pause = false;
+					else
+						ctl.pause = true;
+					break;
+				case ui::events::key::r:
+					if (ctl.render)
+						ctl.render = false;
+					else
+						ctl.render = true;
+					break;
+				default:
+					break;
+				}
+			});
 		}
 	});
 }
